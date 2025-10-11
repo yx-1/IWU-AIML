@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort - Waste Sorting App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; overflow: hidden; }
+        #app { height: 100vh; display: flex; flex-direction: column; max-width: 500px; margin: 0 auto; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .content { flex: 1; overflow-y: auto; padding-bottom: 20px; }
+        .bottom-nav { display: flex; justify-content: space-around; border-top: 1px solid #e0e0e0; background: white; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; padding: 5px 15px; border: none; background: none; cursor: pointer; color: #666; transition: all 0.3s; border-radius: 8px; }
+        .nav-btn.active { color: #3b82f6; background: #eff6ff; }
+        .nav-icon { font-size: 24px; margin-bottom: 4px; }
+        .nav-text { font-size: 11px; font-weight: 600; }
+        .browse-header { padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .browse-header h1 { font-size: 26px; margin-bottom: 8px; }
+        .browse-subtitle { font-size: 14px; opacity: 0.9; margin-bottom: 15px; }
+        .search-box { position: relative; }
+        .search-box input { width: 100%; padding: 12px 12px 12px 40px; border: none; border-radius: 10px; font-size: 14px; }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; }
+        .section-header { padding: 20px 20px 10px; display: flex; justify-content: space-between; align-items: center; }
+        .section-title { font-size: 18px; font-weight: bold; color: #333; }
+        .section-count { font-size: 13px; color: #666; }
+        .popular-items { padding: 0 20px 20px; display: flex; gap: 10px; overflow-x: auto; }
+        .popular-item { min-width: 140px; background: white; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; border: 2px solid #f0f0f0; transition: all 0.3s; }
+        .popular-item:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); border-color: #3b82f6; }
+        .popular-icon { font-size: 36px; margin-bottom: 8px; }
+        .popular-name { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+        .popular-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; display: inline-block; }
+        .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 20px 20px; }
+        .category-card { background: white; border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; border: 2px solid #f0f0f0; position: relative; }
+        .category-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #3b82f6; }
+        .category-icon { font-size: 48px; margin-bottom: 10px; }
+        .category-name { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; }
+        .category-count { font-size: 11px; color: #999; }
+        .category-badge { position: absolute; top: 10px; right: 10px; background: #3b82f6; color: white; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
+        .page-header { padding: 20px; background: white; border-bottom: 1px solid #e0e0e0; }
+        .back-btn { display: flex; align-items: center; background: none; border: none; color: #666; cursor: pointer; padding: 5px 0; margin-bottom: 15px; font-size: 14px; }
+        .page-title { display: flex; align-items: center; font-size: 24px; font-weight: bold; }
+        .page-title-icon { font-size: 36px; margin-right: 15px; }
+        .items-list { padding: 20px; }
+        .subcategory-grid { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 20px; }
+        .item-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s; border: 2px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+        .item-card:hover { border-color: #3b82f6; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .item-left { display: flex; align-items: center; flex: 1; }
+        .item-icon { font-size: 32px; margin-right: 15px; }
+        .item-info { flex: 1; }
+        .item-name { font-weight: 600; margin-bottom: 4px; font-size: 14px; }
+        .item-desc { font-size: 11px; color: #999; margin-bottom: 4px; }
+        .item-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge-recyclable { background: #dcfce7; color: #16a34a; }
+        .badge-compost { background: #fef3c7; color: #d97706; }
+        .badge-trash { background: #fce7f3; color: #be185d; }
+        .badge-hazardous { background: #fee2e2; color: #dc2626; }
+        .badge-ewaste { background: #dbeafe; color: #2563eb; }
+        .badge-special { background: #f3e8ff; color: #9333ea; }
+        .detail-header { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .detail-icon { font-size: 72px; margin-bottom: 15px; }
+        .detail-title { font-size: 24px; font-weight: bold; margin-bottom: 12px; }
+        .detail-category { display: inline-block; padding: 8px 20px; border-radius: 20px; font-weight: 600; background: rgba(255,255,255,0.2); }
+        .detail-content { padding: 20px; }
+        .detail-section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .section-title-detail { font-size: 16px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; }
+        .section-icon { font-size: 20px; margin-right: 8px; }
+        .detail-section ul { margin-left: 20px; color: #555; }
+        .detail-section li { margin-bottom: 8px; line-height: 1.5; }
+        .detail-section p { color: #555; line-height: 1.6; }
+        .chat-container { display: flex; flex-direction: column; height: 100%; }
+        .chat-header { padding: 20px; background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); color: white; }
+        .chat-header h2 { font-size: 20px; margin-bottom: 5px; }
+        .chat-subtitle { font-size: 13px; opacity: 0.9; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; background: #f9fafb; }
+        .message { margin-bottom: 15px; display: flex; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.user { justify-content: flex-end; }
+        .message-bubble { max-width: 75%; padding: 12px 16px; border-radius: 18px; line-height: 1.5; font-size: 14px; white-space: pre-line; }
+        .message.bot .message-bubble { background: white; border: 1px solid #e5e7eb; color: #333; }
+        .message.user .message-bubble { background: #3b82f6; color: white; }
+        .chat-input-area { padding: 15px; background: white; border-top: 1px solid #e0e0e0; }
+        .quick-buttons { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; }
+        .quick-btn { padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+        .quick-btn:hover { background: #e5e7eb; }
+        .chat-input-box { display: flex; gap: 10px; }
+        .chat-input-box input { flex: 1; padding: 12px; border: 2px solid #e5e7eb; border-radius: 20px; font-size: 14px; }
+        .chat-input-box button { padding: 12px 20px; background: #3b82f6; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; }
+        .learn-content { padding: 20px; }
+        .learn-header-text { margin-bottom: 25px; }
+        .learn-header-text h2 { font-size: 24px; font-weight: bold; margin-bottom: 8px; }
+        .learn-header-text p { color: #666; }
+        .learn-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .learn-card { background: white; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s; border: 2px solid #f0f0f0; }
+        .learn-card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-color: #3b82f6; }
+        .learn-card-icon { font-size: 40px; margin-bottom: 10px; }
+        .learn-card-title { font-weight: bold; margin-bottom: 8px; font-size: 14px; }
+        .learn-card-desc { font-size: 12px; color: #666; }
+        .impact-card { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); color: white; border-radius: 15px; padding: 25px; margin-bottom: 25px; }
+        .impact-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .impact-title { font-size: 20px; font-weight: bold; }
+        .impact-subtitle { font-size: 13px; opacity: 0.9; }
+        .impact-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .stat { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { font-size: 11px; opacity: 0.9; }
+        .achievements { background: white; border-radius: 15px; padding: 20px; }
+        .achievements-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; }
+        .badges-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .badge { text-align: center; padding: 15px 10px; background: #f9fafb; border-radius: 10px; }
+        .badge.locked { opacity: 0.4; }
+        .badge-icon-achieve { font-size: 32px; margin-bottom: 8px; }
+        .badge-name { font-size: 10px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="content" id="content"></div>
+        <div class="bottom-nav">
+            <button class="nav-btn active" onclick="showPage('browse')" id="nav-browse">
+                <div class="nav-icon">🗂️</div>
+                <div class="nav-text">Browse</div>
+            </button>
+            <button class="nav-btn" onclick="showPage('chat')" id="nav-chat">
+                <div class="nav-icon">💬</div>
+                <div class="nav-text">Ask</div>
+            </button>
+            <button class="nav-btn" onclick="showPage('learn')" id="nav-learn">
+                <div class="nav-icon">📚</div>
+                <div class="nav-text">Learn</div>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 'browse';
+        let selectedCategory = null;
+        let selectedSubCategory = null;
+        let chatMessages = [
+            { sender: 'bot', text: "Hi! I'm EcoBot 🌱\n\nI can help you figure out how to dispose of any item correctly. Just ask me!\n\nExamples:\n• 'Can I recycle pizza boxes?'\n• 'Where do batteries go?'\n• 'What can I compost?'" }
+        ];
+
+        const categories = {
+            kitchen: {
+                id: 'kitchen', name: 'Kitchen & Food', icon: '🍴', color: '#10b981', new: false,
+                subCategories: {
+                    foodScraps: {
+                        name: 'Food Scraps', icon: '🥗',
+                        items: [
+                            { id: 'coffee', name: 'Coffee Grounds & Filters', category: 'Compost', icon: '☕', desc: 'With paper filters',
+                              preparation: ['Include paper filters', 'Let cool first', 'Add directly to bin'],
+                              reason: 'High in nitrogen, perfect for compost. Worms love them!',
+                              localNote: 'Many coffee shops give away free grounds for gardeners.',
+                              funFact: 'Coffee grounds repel slugs, snails, and even cats from gardens!' },
+                            { id: 'peels', name: 'Fruit & Veggie Peels', category: 'Compost', icon: '🥕', desc: 'All fruit/vegetable scraps',
+                              preparation: ['Remove stickers first', 'No need to chop small', 'Citrus peels OK in moderation'],
+                              reason: 'Rich in nutrients and moisture. Breaks down quickly in compost.',
+                              localNote: 'Accepted in most municipal composting programs.',
+                              funFact: 'Banana peels can make roses grow 3x bigger!' },
+                            { id: 'eggs', name: 'Eggshells', category: 'Compost', icon: '🥚', desc: 'Clean, crushed shells',
+                              preparation: ['Rinse briefly', 'Crush for faster breakdown', 'Can air dry first'],
+                              reason: 'Adds calcium to soil. Prevents blossom end rot in tomatoes.',
+                              localNote: 'Takes longer to break down but very beneficial for plants.',
+                              funFact: 'Crushed eggshells stop slugs like a tiny fence!' },
+                            { id: 'tea', name: 'Tea Bags', category: 'Compost', icon: '🍵', desc: 'Paper bags only',
+                              preparation: ['Remove staples', 'Check if bag is paper', 'Squeeze out excess liquid'],
+                              reason: 'Tea leaves are nitrogen-rich. Paper decomposes, plastic doesn\'t.',
+                              localNote: 'Most brands now use compostable bags. Check packaging.',
+                              funFact: 'Used tea bags reduce under-eye puffiness!' },
+                            { id: 'bread', name: 'Bread & Pasta', category: 'Compost', icon: '🍞', desc: 'Stale carbs',
+                              preparation: ['Break into pieces', 'Bury deep in compost', 'Avoid if moldy'],
+                              reason: 'Carbohydrates break down well but attract pests if exposed.',
+                              localNote: 'Small amounts fine. Large amounts may attract animals.',
+                              funFact: 'Stale bread makes amazing homemade croutons first!' },
+                            { id: 'meat', name: 'Meat & Bones', category: 'Trash', icon: '🍖', desc: 'Not compostable',
+                              preparation: ['Wrap in newspaper', 'Seal in bag', 'Freeze until trash day if needed'],
+                              reason: 'Attracts pests. Takes 10-20 years to decompose in home compost.',
+                              localNote: 'Some industrial composting facilities accept meat.',
+                              funFact: 'Bones can become dog treats if boiled and dried properly!' }
+                        ]
+                    },
+                    beverages: {
+                        name: 'Beverage Containers', icon: '🥤',
+                        items: [
+                            { id: 'plastic', name: 'Plastic Water Bottle', category: 'Recyclable', icon: '🍾', desc: 'PET #1 plastic',
+                              preparation: ['Empty completely', 'Quick rinse', 'Keep cap ON (recycles together)', 'Crush to save space'],
+                              reason: 'PET plastic is highly valuable. Becomes new bottles, fleece, carpet.',
+                              localNote: 'Deposit states: CA, CT, HI, IA, ME, MA, MI, NY, OR, VT = 5-10¢ back!',
+                              funFact: 'Recycling 1 bottle powers a laptop for 3 hours!' },
+                            { id: 'aluminum', name: 'Aluminum Can', category: 'Recyclable', icon: '🥫', desc: 'Soda, beer cans',
+                              preparation: ['Quick rinse', 'Labels can stay', 'Don\'t crush (single-stream)', 'Empty completely'],
+                              reason: 'Aluminum recycles infinitely. Uses 95% less energy than making new.',
+                              localNote: 'Return for deposit in 10 states. Check store policies.',
+                              funFact: 'Recycled can back on shelf as NEW can in 60 days!' },
+                            { id: 'glass', name: 'Glass Bottle/Jar', category: 'Recyclable', icon: '🍷', desc: 'Wine, beer, jars',
+                              preparation: ['Rinse out', 'Remove metal lids separately', 'Labels OK', 'Don\'t include broken glass'],
+                              reason: 'Glass recycles endlessly without quality loss. Becomes new containers.',
+                              localNote: 'Some areas want colors separated. Check local rules.',
+                              funFact: 'Glass takes 1 MILLION years to decompose in landfills!' },
+                            { id: 'coffeecup', name: 'Paper Coffee Cup', category: 'Trash', icon: '☕', desc: 'Disposable cups',
+                              preparation: ['Separate plastic lid (recyclable)', 'Remove sleeve', 'Cup goes to trash'],
+                              reason: 'Plastic lining prevents recycling. Only 1% of facilities can process.',
+                              localNote: 'Use reusable cups! Starbucks gives 10¢ discount.',
+                              funFact: '500 billion disposable cups used worldwide yearly!' },
+                            { id: 'carton', name: 'Milk/Juice Carton', category: 'Recyclable', icon: '🥛', desc: 'Tetra Pak',
+                              preparation: ['Rinse out', 'Can keep cap on', 'Flatten if possible'],
+                              reason: 'Paper with plastic/aluminum lining. Many facilities now accept.',
+                              localNote: 'Check locally - not all programs accept cartons yet.',
+                              funFact: 'Cartons are 70% paper from sustainable forests!' }
+                        ]
+                    },
+                    packaging: {
+                        name: 'Food Packaging', icon: '📦',
+                        items: [
+                            { id: 'pizza', name: 'Pizza Box', category: 'Special', icon: '🍕', desc: 'Cardboard box',
+                              preparation: ['Remove leftover pizza', 'Tear off greasy bottom', 'Recycle clean top', 'Flatten box'],
+                              reason: 'Grease contaminates recycling. Clean = recycle, greasy = compost/trash.',
+                              localNote: 'Growing number of areas accept greasy boxes in compost.',
+                              funFact: '3 billion pizza boxes used in US every year!' },
+                            { id: 'wrap', name: 'Plastic Wrap', category: 'Trash', icon: '📦', desc: 'Cling film',
+                              preparation: ['Remove from food', 'Bundle together'],
+                              reason: 'Too thin and sticky for recycling machines. Causes jams.',
+                              localNote: 'Use beeswax wraps or containers instead!',
+                              funFact: 'Americans use enough plastic wrap yearly to wrap Texas!' },
+                            { id: 'foil', name: 'Aluminum Foil', category: 'Recyclable', icon: '🥈', desc: 'Clean foil only',
+                              preparation: ['Scrape off food', 'Ball together (tennis ball size)', 'Must be clean'],
+                              reason: 'Aluminum is valuable. Small pieces get lost, so ball it up!',
+                              localNote: 'Accepted in most recycling programs if clean.',
+                              funFact: 'Foil can be recycled infinite times!' }
+                        ]
+                    }
+                }
+            },
+            electronics: {
+                id: 'electronics', name: 'Electronics & Tech', icon: '🔋', color: '#3b82f6', new: false,
+                subCategories: {
+                    batteries: {
+                        name: 'Batteries', icon: '🔋',
+                        items: [
+                            { id: 'alkaline', name: 'AA/AAA/D/C Batteries', category: 'Hazardous', icon: '🔋', desc: 'Single-use batteries',
+                              preparation: ['Store in non-metal container', 'Tape 9V terminals', 'Keep dry', 'Don\'t mix with metal'],
+                              reason: 'Contains heavy metals (zinc, manganese) that poison soil and water.',
+                              localNote: 'Hardware stores, Best Buy, or HHW facilities accept free.',
+                              funFact: '3 billion batteries thrown away each year in US!' },
+                            { id: 'lithium', name: 'Lithium-ion Batteries', category: 'Hazardous', icon: '⚡', desc: 'Rechargeable',
+                              preparation: ['⚠️ NEVER throw in trash', 'Tape all terminals', 'Fireproof container', 'Keep from metal'],
+                              reason: 'Can explode and cause fires in trucks/facilities. Very dangerous!',
+                              localNote: 'Return to electronics stores or manufacturer programs.',
+                              funFact: 'Lithium batteries cause 1,000+ facility fires yearly!' },
+                            { id: 'car', name: 'Car Battery', category: 'Hazardous', icon: '🚗', desc: 'Lead-acid',
+                              preparation: ['Wear gloves', 'Keep upright', 'Don\'t crack case'],
+                              reason: 'Contains lead and sulfuric acid. 99% recyclable when done right.',
+                              localNote: 'Auto parts stores MUST accept by law. May offer $10-20 credit.',
+                              funFact: 'Car batteries are #1 most recycled product!' }
+                        ]
+                    },
+                    devices: {
+                        name: 'Devices', icon: '📱',
+                        items: [
+                            { id: 'phone', name: 'Smartphone', category: 'E-Waste', icon: '📱', desc: 'Cell phones',
+                              preparation: ['Backup data', 'Factory reset', 'Remove SIM card', 'Donate if working'],
+                              reason: 'Contains gold, copper, and toxic components. Valuable if recycled!',
+                              localNote: 'Best Buy, Apple, carriers = free recycling. Trade-in = $$.',
+                              funFact: 'A ton of phones has MORE gold than a ton of gold ore!' },
+                            { id: 'laptop', name: 'Laptop/Computer', category: 'E-Waste', icon: '💻', desc: 'All computers',
+                              preparation: ['Wipe hard drive', 'Remove battery', 'Backup data first'],
+                              reason: 'Precious metals, plastics, hazardous materials need special processing.',
+                              localNote: 'Manufacturers often have mail-back programs. Check online.',
+                              funFact: 'Only 15-20% of e-waste is recycled globally!' },
+                            { id: 'cables', name: 'Cables & Chargers', category: 'E-Waste', icon: '🔌', desc: 'All cords',
+                              preparation: ['Bundle together', 'Remove from devices', 'Include power bricks'],
+                              reason: 'Contains copper wire. Valuable when recycled properly.',
+                              localNote: 'Electronics stores accept. Donate working chargers!',
+                              funFact: 'Americans toss $60 million in cables yearly!' }
+                        ]
+                    },
+                    bulbs: {
+                        name: 'Light Bulbs', icon: '💡',
+                        items: [
+                            { id: 'led', name: 'LED Bulb', category: 'E-Waste', icon: '💡', desc: 'Modern bulbs',
+                              preparation: ['Original box if possible', 'Wrap if broken'],
+                              reason: 'Contains electronics and metals. Recyclable at e-waste facilities.',
+                              localNote: 'Hardware stores often accept. Check manufacturer programs.',
+                              funFact: 'LEDs last 25x longer than old bulbs!' },
+                            { id: 'cfl', name: 'CFL Bulb', category: 'Hazardous', icon: '💡', desc: 'Compact fluorescent',
+                              preparation: ['⚠️ Contains mercury', 'Don\'t break', 'Keep in packaging'],
+                              reason: 'Mercury is toxic. Must recycle at hazardous waste facilities.',
+                              localNote: 'Home Depot, Lowe\'s, IKEA accept FREE.',
+                              funFact: 'If broken, mercury vapor can harm you - ventilate!' },
+                            { id: 'incandescent', name: 'Incandescent Bulb', category: 'Trash', icon: '💡', desc: 'Old-style bulbs',
+                              preparation: ['Wrap in paper', 'Place carefully in trash'],
+                              reason: 'Mixed materials, thin glass. Not recyclable. Not hazardous.',
+                              localNote: 'Being phased out. Switch to LEDs for 75% energy savings!',
+                              funFact: '95% of energy becomes HEAT, not light!' }
+                        ]
+                    }
+                }
+            },
+            chemicals: {
+                id: 'chemicals', name: 'Chemicals & Hazardous', icon: '🧪', color: '#ef4444', new: false,
+                subCategories: {
+                    paint: {
+                        name: 'Paint & Solvents', icon: '🎨',
+                        items: [
+                            { id: 'latex', name: 'Latex/Acrylic Paint', category: 'Special', icon: '🎨', desc: 'Water-based paint',
+                              preparation: ['Dry completely (cat litter)', 'Leave lid off', 'Once solid = trash'],
+                              reason: 'Liquid is hazardous. Dried latex is not toxic but don\'t pour down drain.',
+                              localNote: 'Paint recycling programs available. Donate usable paint!',
+                              funFact: 'Community theaters LOVE leftover paint donations!' },
+                            { id: 'oil', name: 'Oil-Based Paint', category: 'Hazardous', icon: '🖌️', desc: 'Enamel paint',
+                              preparation: ['Keep in original container', 'NEVER pour down drain', 'HHW facility only'],
+                              reason: 'Contains toxic solvents and VOCs. Requires special handling.',
+                              localNote: 'HHW collection events or permanent facilities only.',
+                              funFact: 'Oil paint takes decades to break down!' }
+                        ]
+                    },
+                    cleaners: {
+                        name: 'Cleaning Products', icon: '🧴',
+                        items: [
+                            { id: 'bleach', name: 'Bleach', category: 'Hazardous', icon: '🧴', desc: 'Chlorine bleach',
+                              preparation: ['⚠️ NEVER mix chemicals', 'Original container', 'Use completely'],
+                              reason: 'Corrosive. Creates toxic fumes when mixed. Kills aquatic life.',
+                              localNote: 'Small amounts: dilute heavily, pour down drain. Large: HHW.',
+                              funFact: 'Bleach + ammonia = deadly chlorine gas!' },
+                            { id: 'cleaner', name: 'All-Purpose Cleaner', category: 'Special', icon: '🧹', desc: 'Spray cleaners',
+                              preparation: ['Use completely', 'Empty bottles recyclable', 'Check plastic type'],
+                              reason: 'Most water-based and safe. Bottles are #2 HDPE plastic.',
+                              localNote: 'DIY: vinegar + water works for most cleaning!',
+                              funFact: 'Vinegar kills 99% of bacteria naturally!' }
+                        ]
+                    }
+                }
+            },
+            packaging: {
+                id: 'packaging', name: 'Packaging & Paper', icon: '📦', color: '#f59e0b', new: false,
+                subCategories: {
+                    cardboard: {
+                        name: 'Cardboard & Boxes', icon: '📦',
+                        items: [
+                            { id: 'box', name: 'Shipping Box', category: 'Recyclable', icon: '📦', desc: 'Amazon, delivery boxes',
+                              preparation: ['Remove ALL tape', 'Take out plastic bags', 'Flatten completely', 'Keep dry'],
+                              reason: 'Cardboard is gold! Made into new boxes and paper products.',
+                              localNote: 'One of most valuable recyclables. High demand.',
+                              funFact: 'Recycled cardboard uses 75% less energy!' },
+                            { id: 'cereal', name: 'Cereal/Food Box', category: 'Recyclable', icon: '📦', desc: 'Paperboard',
+                              preparation: ['Remove plastic liner', 'Flatten', 'Small food residue OK'],
+                              reason: 'Paperboard recycles easily. Already made from recycled content.',
+                              localNote: 'Mix with regular cardboard recycling.',
+                              funFact: 'Most cereal boxes have 35% recycled content!' },
+                            { id: 'egg', name: 'Egg Carton', category: 'Special', icon: '🥚', desc: 'Cardboard or foam',
+                              preparation: ['Check material type', 'Cardboard = recycle/compost', 'Foam = usually trash'],
+                              reason: 'Cardboard OK. Styrofoam usually not accepted. Plastic varies.',
+                              localNote: 'Best: Reuse for seed starters or organizing!',
+                              funFact: 'Perfect for starting garden seeds!' }
+                        ]
+                    },
+                    plastic: {
+                        name: 'Plastic Bags & Film', icon: '🛍️',
+                        items: [
+                            { id: 'grocery', name: 'Plastic Grocery Bag', category: 'Special', icon: '🛍️', desc: 'Shopping bags',
+                              preparation: ['Clean and dry', 'Bundle together', '⚠️ NEVER curbside bin', 'Store drop-off'],
+                              reason: 'Tangles in machines, shuts down facilities. Costs $1000s to fix!',
+                              localNote: 'Most grocery stores have bins at entrance.',
+                              funFact: '100 billion plastic bags used yearly in US!' },
+                            { id: 'ziplock', name: 'Ziploc Bags', category: 'Special', icon: '🥪', desc: 'Sandwich bags',
+                              preparation: ['Wash and dry', 'Remove zipper', 'Store drop-off with bags'],
+                              reason: 'Same as grocery bags. Recyclable but not curbside.',
+                              localNote: 'Reuse 20-30 times before recycling!',
+                              funFact: 'One bag can be reused 30+ times!' },
+                            { id: 'bubble', name: 'Bubble Wrap', category: 'Special', icon: '📦', desc: 'Air-filled plastic',
+                              preparation: ['Pop out the fun first!', 'Bundle together', 'Store drop-off'],
+                              reason: 'Plastic film. Same rules as bags.',
+                              localNote: 'Reuse for shipping or donate to shipping stores.',
+                              funFact: 'Bubble wrap was invented as 3D wallpaper!' }
+                        ]
+                    },
+                    paper: {
+                        name: 'Paper Products', icon: '📄',
+                        items: [
+                            { id: 'newspaper', name: 'Newspaper', category: 'Recyclable', icon: '📰', desc: 'Print news',
+                              preparation: ['Remove rubber bands', 'Keep dry', 'Can include inserts'],
+                              reason: 'Easily recyclable. Made into new newsprint and packaging.',
+                              localNote: 'One of oldest recycling programs. Very established.',
+                              funFact: '68% of paper is recycled in the US!' },
+                            { id: 'magazine', name: 'Magazines', category: 'Recyclable', icon: '📖', desc: 'Glossy paper',
+                              preparation: ['Remove plastic wrap', 'Can leave staples', 'Glossy coating OK'],
+                              reason: 'Recycled into more magazines and paper products.',
+                              localNote: 'Better: Donate to doctors offices, libraries!',
+                              funFact: 'Glossy coating doesn\'t affect recycling!' },
+                            { id: 'mail', name: 'Junk Mail & Envelopes', category: 'Recyclable', icon: '✉️', desc: 'All mail',
+                              preparation: ['Plastic windows OK', 'Remove large metal clips', 'Shred sensitive docs'],
+                              reason: 'Paper is paper. Even with windows, it recycles fine.',
+                              localNote: 'Stop junk mail: catalogchoice.org',
+                              funFact: '100 million trees = yearly junk mail!' }
+                        ]
+                    }
+                }
+            },
+            household: {
+                id: 'household', name: 'Household Items', icon: '🏡', color: '#8b5cf6', new: false,
+                subCategories: {
+                    textiles: {
+                        name: 'Clothing & Textiles', icon: '👕',
+                        items: [
+                            { id: 'clothes', name: 'Wearable Clothes', category: 'Special', icon: '👕', desc: 'Good condition',
+                              preparation: ['Wash/clean', 'Working zippers/buttons', 'No stains/holes'],
+                              reason: 'Extends life. Reduces waste. Helps others.',
+                              localNote: 'Goodwill, Salvation Army, homeless shelters, or sell online.',
+                              funFact: 'Average American throws away 81 lbs of clothes yearly!' },
+                            { id: 'torn', name: 'Torn/Damaged Clothes', category: 'Special', icon: '🧵', desc: 'Not wearable',
+                              preparation: ['Cut into rags', 'Textile recycling bins', 'Or H&M/North Face'],
+                              reason: 'Can be broken down into fibers for insulation, carpet padding.',
+                              localNote: 'H&M takes ANY brand, any condition. $5 coupon!',
+                              funFact: 'Only 15% of textiles are recycled!' },
+                            { id: 'shoes', name: 'Shoes', category: 'Special', icon: '👟', desc: 'Footwear',
+                              preparation: ['Clean if possible', 'Tie pairs together', 'Wearable = donate'],
+                              reason: 'Athletic shoes can be ground into playground surfaces!',
+                              localNote: 'Nike Reuse-A-Shoe program, or donate wearable ones.',
+                              funFact: 'Shoes take 30-40 years to decompose!' }
+                        ]
+                    },
+                    furniture: {
+                        name: 'Furniture & Large Items', icon: '🛋️',
+                        items: [
+                            { id: 'furniture', name: 'Furniture', category: 'Special', icon: '🛋️', desc: 'Sofas, tables, chairs',
+                              preparation: ['Check if usable', 'Clean', 'Take photos for donation'],
+                              reason: 'Reuse is best! Prevents waste, helps others.',
+                              localNote: 'Habitat for Humanity ReStore, Salvation Army pickup, or Craigslist free.',
+                              funFact: '12 million tons of furniture trashed yearly!' },
+                            { id: 'mattress', name: 'Mattress', category: 'Special', icon: '🛏️', desc: 'Beds',
+                              preparation: ['Wrap in plastic', 'Schedule pickup', 'Check recycling options'],
+                              reason: '75% of mattress can be recycled! Steel, foam, wood.',
+                              localNote: 'Many cities have mattress recycling programs. Check byebyemattress.com.',
+                              funFact: '20 million mattresses trashed yearly in US!' }
+                        ]
+                    }
+                }
+            },
+            yard: {
+                id: 'yard', name: 'Yard & Garden', icon: '🌿', color: '#84cc16', new: true,
+                subCategories: {
+                    yardWaste: {
+                        name: 'Yard Waste', icon: '🍂',
+                        items: [
+                            { id: 'leaves', name: 'Leaves & Grass', category: 'Compost', icon: '🍂', desc: 'Lawn clippings',
+                              preparation: ['Can compost at home', 'Paper bags for collection', 'Mix grass with leaves'],
+                              reason: 'Perfect balance: grass = nitrogen, leaves = carbon.',
+                              localNote: 'Many areas offer FREE yard waste collection in fall.',
+                              funFact: 'Grass clippings are 85% water!' },
+                            { id: 'branches', name: 'Branches & Twigs', category: 'Compost', icon: '🌳', desc: 'Wood waste',
+                              preparation: ['Cut to size', 'Can chip for mulch', 'Check size limits'],
+                              reason: 'Adds structure to compost. Takes longer to break down.',
+                              localNote: 'Many cities offer free brush chipping services!',
+                              funFact: 'Wood chips suppress weeds naturally!' },
+                            { id: 'soil', name: 'Dirt & Soil', category: 'Special', icon: '🏔️', desc: 'Excess soil',
+                              preparation: ['Free on Craigslist', 'Landscapers may want', 'Check for contamination'],
+                              reason: 'Not trash! Reuse for grading, filling, gardening.',
+                              localNote: 'Post free on Craigslist. Gardeners will take it!',
+                              funFact: 'Soil is teeming with billions of microorganisms!' }
+                        ]
+                    }
+                }
+            }
+        };
+
+        const popularItems = [
+            { id: 'plastic', name: 'Plastic Bottle', icon: '🍾', category: 'Recyclable', badge: 'recyclable' },
+            { id: 'pizza', name: 'Pizza Box', icon: '🍕', category: 'Mixed', badge: 'special' },
+            { id: 'alkaline', name: 'Batteries', icon: '🔋', category: 'Hazardous', badge: 'hazardous' },
+            { id: 'coffee', name: 'Coffee Grounds', icon: '☕', category: 'Compost', badge: 'compost' },
+            { id: 'box', name: 'Cardboard', icon: '📦', category: 'Recyclable', badge: 'recyclable' }
+        ];
+
+        // COMPREHENSIVE AI KNOWLEDGE BASE - Can answer about ANY waste item
+        function getAIResponse(text) {
+            const lower = text.toLowerCase();
+            
+            // Specific item responses
+            if (lower.includes('pizza')) {
+                return 'Pizza boxes can be tricky! 🍕\n\n✂️ If GREASY: Tear off bottom (trash/compost), recycle clean top\n♻️ If CLEAN: Recycle whole thing!\n\n📍 Some composting programs now accept greasy boxes!';
+            }
+            if (lower.includes('batter')) {
+                return 'Batteries are HAZARDOUS! 🔋\n\n⚠️ NEVER throw in regular trash!\n\nWhere to take:\n• Hardware stores (Home Depot, Lowe\'s)\n• Best Buy, Staples\n• Battery drop-off locations\n• HHW facilities\n\n💡 Lithium batteries can cause FIRES in trucks!';
+            }
+            if (lower.includes('diaper')) {
+                return 'Diapers go in the TRASH! 🚼\n\n✅ How to dispose:\n1. Flush solid waste down toilet first\n2. Roll up diaper\n3. Seal in small bag\n4. Place in trash\n\n❌ NOT recyclable or compostable (due to sanitary concerns)\n\n🌱 Better option: Consider reusable cloth diapers!\n\n⏰ Takes 500 years to decompose!\n\n💡 8 billion diapers go to US landfills yearly!';
+            }
+            if (lower.includes('baby') && (lower.includes('wipe') || lower.includes('wet'))) {
+                return 'Baby wipes go in TRASH! 👶\n\n⚠️ NEVER flush (even "flushable" ones)!\n\nWhy:\n• Clog pipes\n• Don\'t break down\n• Damage sewage systems\n\n✅ How to dispose:\n1. Place in trash\n2. Seal bag to reduce odor\n\n🚫 NOT compostable\n\n💡 They cause $1 billion in plumbing damage yearly!';
+            }
+            if (lower.includes('bottle') && lower.includes('plastic')) {
+                return 'Plastic bottles are recyclable! 🍾\n\n✅ How:\n1. Empty & rinse\n2. Keep cap ON (recycles together)\n3. Crush to save space\n\n💰 Deposit states = 5-10¢ back!\n⚡ Recycling 1 bottle powers laptop 3 hours!';
+            }
+            if (lower.includes('glass') || lower.includes('bottle') && lower.includes('wine')) {
+                return 'Glass is AWESOME for recycling! 🍷\n\n✅ How:\n1. Rinse out\n2. Remove metal lids\n3. Labels OK\n4. Broken glass = trash\n\n♻️ Glass recycles FOREVER without losing quality!\n\n✨ Takes 1 MILLION years to decompose!';
+            }
+            if (lower.includes('cardboard') || lower.includes('box') && !lower.includes('pizza')) {
+                return 'Cardboard is GOLD! 📦\n\n✅ How:\n1. Remove tape\n2. Take out plastic\n3. Flatten\n4. Keep DRY\n\n⚡ Uses 75% less energy than new!\n\n💡 One of most valuable recyclables!';
+            }
+            if (lower.includes('clothes') || lower.includes('clothing') || lower.includes('shirt') || lower.includes('pants')) {
+                return 'Don\'t trash clothes! 👕\n\n✅ Wearable:\n• Goodwill, Salvation Army\n• Homeless shelters\n• Sell: Poshmark, ThredUp\n\n❌ Damaged:\n• H&M (any brand!)\n• Textile recycling bins\n• Cut into rags\n\n✨ Only 15% of textiles recycled!';
+            }
+            if (lower.includes('styrofoam') || lower.includes('foam')) {
+                return 'Styrofoam is tricky! 📦\n\n❌ Most programs DON\'T accept\n\nWhy: 98% air, expensive to recycle\n\n🗑️ Usually = trash\n\n📍 Rare drop-offs at earth911.org\n\n🌱 Use cardboard instead!\n\n⏰ Takes 500+ years to decompose!';
+            }
+            if (lower.includes('compost')) {
+                return 'Love composting! 🌱\n\n✅ YES:\n• Fruit/veggie scraps\n• Coffee grounds\n• Eggshells\n• Bread, pasta\n• Tea bags (paper)\n\n❌ NO:\n• Meat & bones\n• Dairy\n• Oils/grease\n• Pet waste\n\n💡 Balance greens + browns!';
+            }
+            if (lower.includes('tissue') || lower.includes('paper towel') || lower.includes('napkin')) {
+                return 'Used tissue/paper towels → COMPOST or TRASH! 🧻\n\n✅ Clean = RECYCLE\n🗑️ Used/dirty = TRASH or COMPOST\n\nWhy:\n• Food-soiled paper contaminates recycling\n• But it CAN compost!\n\n💡 Tip: Most composting programs accept dirty paper towels & napkins.\n\n🌱 They break down quickly!';
+            }
+            if (lower.includes('toilet paper') || lower.includes('tp')) {
+                return 'Toilet paper goes down the TOILET! 🚽\n\n✅ That\'s it! Just flush.\n\n📦 Empty rolls:\n• Cardboard tube = RECYCLE\n• Or use for crafts!\n\n🚫 Don\'t put used TP in trash (sanitary issues)\n\n✨ TP breaks down quickly in water!';
+            }
+            if (lower.includes('mirror') || lower.includes('window')) {
+                return 'Mirrors & window glass → TRASH (not recycling)! 🪞\n\n❌ Why not recycle?\n• Different melting point than bottles/jars\n• Contaminates recycling batches\n\n✅ How to dispose:\n1. Wrap carefully in cardboard/paper\n2. Mark "GLASS - HANDLE WITH CARE"\n3. Place in trash\n\n💡 Some glass recyclers accept at drop-off (check locally)';
+            }
+            if (lower.includes('light bulb') || lower.includes('lightbulb')) {
+                return 'Light bulbs vary by type! 💡\n\n🔵 LED: E-waste (hardware stores)\n⚠️ CFL: HAZARDOUS (contains mercury) - Home Depot/Lowe\'s\n🗑️ Incandescent: TRASH (wrap in paper)\n\n💡 Never put in recycling bin!\n\nFree drop-off:\n• Home Depot\n• Lowe\'s\n• IKEA';
+            }
+            if (lower.includes('electronics') || lower.includes('phone') || lower.includes('computer') || lower.includes('laptop')) {
+                return 'Electronics = E-WASTE! 📱\n\n✅ Where to recycle FREE:\n• Best Buy (any brand)\n• Apple stores (Apple products)\n• Staples\n• Manufacturer mail-back\n\n💡 Before recycling:\n1. Backup data\n2. Factory reset\n3. Remove SIM/memory cards\n\n💰 Working devices? Trade in for $!\n\n✨ A ton of phones = more GOLD than gold ore!';
+            }
+            if (lower.includes('paint')) {
+                return 'Paint disposal depends on type! 🎨\n\n💧 LATEX (water-based):\n• Dry it out (cat litter)\n• Once solid = trash\n\n⚠️ OIL-BASED:\n• Keep in container\n• HHW facility ONLY\n• NEVER pour down drain!\n\n💡 Donate usable paint:\n• Habitat ReStore\n• Community theaters\n• Schools';
+            }
+            if (lower.includes('motor oil') || lower.includes('car oil')) {
+                return 'Motor oil is HAZARDOUS but RECYCLABLE! 🛢️\n\n⚠️ NEVER pour down drain or on ground!\n\n✅ Where to take:\n• Auto parts stores (FREE)\n• Oil change shops\n• Some gas stations\n• HHW facilities\n\n♻️ Motor oil recycles INFINITELY!\n\n⚡ 2 gallons recycled = 1 gallon new oil\n\n💡 Many places pay you for used oil!';
+            }
+            if (lower.includes('medicine') || lower.includes('medication') || lower.includes('pill') || lower.includes('prescription')) {
+                return 'Medications need special disposal! 💊\n\n✅ Best options:\n1. Drug Take-Back locations (DEA events)\n2. Pharmacy drop boxes (CVS, Walgreens)\n3. Police stations (some have boxes)\n\n🚫 DON\'T:\n• Flush (contaminates water)\n• Trash (kids/pets can access)\n\n⚠️ If no option available:\n1. Mix with coffee grounds/cat litter\n2. Seal in container\n3. Remove labels\n4. Place in trash';
+            }
+            if (lower.includes('mattress')) {
+                return 'Mattresses are RECYCLABLE! 🛏️\n\n✅ 75% can be recycled (steel, foam, wood)!\n\nWhere to recycle:\n• Check: byebyemattress.com\n• Mattress recycling facilities\n• Some cities offer pickup\n• Furniture Bank donations\n\n💰 May cost $20-50 for pickup\n\n🗑️ 20 million trashed yearly in US!\n\n💡 Buy back programs from some retailers!';
+            }
+            if (lower.includes('tire')) {
+                return 'Tires are RECYCLABLE! 🚗\n\n✅ Where to take:\n• Tire shops (usually FREE with new purchase)\n• Auto shops\n• Waste management facilities\n• Some landfills\n\n⚠️ NEVER:\n• Regular trash\n• Abandon them (disease vectors!)\n\n♻️ Recycled into:\n• Playground surfaces\n• Road asphalt\n• Mulch\n\n💡 290 million tires discarded yearly in US!';
+            }
+            if (lower.includes('christmas tree') || lower.includes('xmas tree')) {
+                return 'Christmas trees are COMPOSTABLE! 🎄\n\n✅ Options:\n1. Curbside collection (check dates)\n2. Drop-off locations\n3. Chip into mulch yourself\n4. Fish habitat programs (lakes)\n\n💡 Prep:\n• Remove ALL decorations\n• No tinsel, lights, ornaments\n• No flocking (spray snow)\n\n🌱 Becomes mulch, compost, or fish habitat!\n\n✨ 25-30 million real trees recycled yearly!';
+            }
+            if (lower.includes('pumpkin')) {
+                return 'Pumpkins are COMPOSTABLE! 🎃\n\n✅ Best options:\n1. Home compost bin\n2. Curbside yard waste\n3. Farm/zoo donation (animal feed)\n4. Bury in garden\n\n💡 Prep:\n• Remove candles\n• Cut into pieces\n• Seeds can be planted!\n\n🗑️ DON\'T trash if possible\n\n🌱 1.3 billion pounds of pumpkins grown yearly!\n\n✨ Takes only 1-2 months to decompose!';
+            }
+            if (lower.includes('receipt')) {
+                return 'Receipts are tricky! 🧾\n\n❌ Thermal receipts (shiny) = TRASH\n• Contains BPA chemical\n• Contaminates recycling\n\n✅ Regular paper receipts = RECYCLE\n\n💡 How to tell:\n• Scratch with fingernail\n• If it turns black = thermal (trash)\n• If nothing = paper (recycle)\n\n🌱 Go digital when possible!';
+            }
+            if (lower.includes('straw')) {
+                return 'Straws depend on material! 🥤\n\n🗑️ Plastic straws = TRASH\n• Too small for recycling\n• Fall through sorting machines\n\n♻️ Paper straws = COMPOST or RECYCLE\n\n✅ Best option:\n• Use reusable (metal/silicone)\n• Or skip straws!\n\n💡 500 million plastic straws used DAILY in US!\n\n🌊 Major ocean pollutant!';
+            }
+            if (lower.includes('toothbrush')) {
+                return 'Toothbrushes are mostly TRASH! 🪥\n\n🗑️ Regular plastic toothbrushes = TRASH\n• Mixed materials\n• Too small to recycle\n\n✅ Better options:\n• Bamboo toothbrushes (compostable handle)\n• Recycling programs: Terracycle\n• Colgate mail-back program\n\n💡 1 billion toothbrushes trashed yearly in US!\n\n🌱 Switch to bamboo or electric with replaceable heads!';
+            }
+            if (lower.includes('toothpaste')) {
+                return 'Toothpaste tubes are tricky! 🦷\n\n🗑️ Most tubes = TRASH\n• Mixed plastic/aluminum\n• Not widely recyclable\n\n✅ NEW options:\n• Terracycle program (mail-back)\n• Tom\'s of Maine mail-back\n• Colgate tubes (check local acceptance)\n\n💡 Squeeze out all paste first\n\n🌱 Look for brands with recyclable tubes!';
+            }
+            if (lower.includes('q-tip') || lower.includes('qtip') || lower.includes('cotton swab')) {
+                return 'Q-tips/cotton swabs → TRASH! 🦻\n\n🗑️ Disposal:\n• Regular trash\n• NOT compostable (often plastic stick)\n\n⚠️ NEVER flush!\n• Clogs pipes\n• Ocean pollution\n\n✅ Better options:\n• Bamboo/paper stick swabs (compostable)\n• Reusable silicone swabs\n\n💡 Plastic stick swabs banned in some countries!';
+            }
+            if (lower.includes('razor') || lower.includes('shaving')) {
+                return 'Razors are tricky! 🪒\n\n⚠️ Disposable razors = TRASH (carefully!)\n• Wrap blade carefully\n• Sharps hazard\n\n♻️ Some metal razors = RECYCLABLE\n• Gillette mail-back program\n• Terracycle programs\n\n✅ Better option:\n• Safety razors (replaceable blades only)\n• Blade bank for used blades\n\n💡 2 billion razors trashed yearly!';
+            }
+            if (lower.includes('takeout') || lower.includes('take out') || lower.includes('food container')) {
+                return 'Takeout containers vary! 🥡\n\n♻️ PLASTIC (#1, #2, #5):\n• Rinse clean\n• Check number on bottom\n• Recycle if accepted locally\n\n📦 CARDBOARD:\n• Grease-free = recycle\n• Greasy = trash/compost\n\n🗑️ STYROFOAM:\n• Usually trash\n\n💡 Black plastic often NOT recyclable!\n\n✅ Best: Bring your own containers!';
+            }
+            if (lower.includes('k-cup') || lower.includes('kcup') || lower.includes('pod') && lower.includes('coffee')) {
+                return 'K-Cups are complicated! ☕\n\n❌ Most are NOT recyclable as-is\n\n✅ To recycle:\n1. Peel off foil lid\n2. Empty coffee grounds (compost!)\n3. Recycle plastic cup (#5) if accepted\n4. Trash filter and foil\n\n💡 OR:\n• Reusable K-Cup filters!\n• Compostable pods (some brands)\n\n🗑️ 10 billion K-Cups trashed yearly!\n\n✨ If end-to-end = Mt. Everest 10x!';
+            }
+            
+            // Category-based intelligent responses
+            if (lower.includes('recycle') && (lower.includes('what') || lower.includes('can i'))) {
+                return "Here's what's commonly recyclable! ♻️\n\n✅ YES:\n• Paper & cardboard (clean & dry)\n• Plastic bottles (#1, #2, #5)\n• Aluminum & steel cans\n• Glass bottles & jars\n\n❌ NO:\n• Plastic bags (take to store)\n• Styrofoam\n• Greasy pizza boxes\n• Broken glass\n\n💡 When in doubt, throw it out!";
+            }
+            
+            // Default helpful response
+            return "I can answer questions about almost ANY waste item! 🌱\n\nJust ask me:\n• 'How do I dispose of [item]?'\n• 'Can I recycle [item]?'\n• 'Where does [item] go?'\n\nPopular items:\n• Diapers, wipes, tissues\n• Electronics, batteries\n• Paint, chemicals\n• Tires, mattresses\n• Food containers\n• And much more!\n\nTry asking about any item!";
+        }
+
+        function showPage(page) {
+            currentPage = page;
+            selectedCategory = null;
+            selectedSubCategory = null;
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('nav-' + page).classList.add('active');
+            if (page === 'browse') renderBrowse();
+            if (page === 'chat') renderChat();
+            if (page === 'learn') renderLearn();
+        }
+
+        function renderBrowse() {
+            const content = document.getElementById('content');
+            if (selectedSubCategory) {
+                const cat = Object.values(categories).find(c =>
+                    Object.values(c.subCategories).some(sc => sc.name === selectedSubCategory)
+                );
+                const sub = Object.values(cat.subCategories).find(s => s.name === selectedSubCategory);
+                content.innerHTML = `
+                    <div class="page-header">
+                        <button class="back-btn" onclick="selectedSubCategory = null; renderBrowse()">← Back</button>
+                        <div class="page-title"><div class="page-title-icon">${sub.icon}</div>${sub.name}</div>
+                    </div>
+                    <div class="subcategory-grid">
+                        ${sub.items.map(i => `
+                            <div class="item-card" onclick="showItemDetail('${i.id}')">
+                                <div class="item-left">
+                                    <div class="item-icon">${i.icon}</div>
+                                    <div class="item-info">
+                                        <div class="item-name">${i.name}</div>
+                                        <div class="item-desc">${i.desc}</div>
+                                        <span class="item-badge badge-${i.category.toLowerCase().replace(/[^a-z]/g, '')}">${i.category}</span>
+                                    </div>
+                                </div>
+                                <div style="font-size:20px; color:#ccc;">›</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (selectedCategory) {
+                const cat = categories[selectedCategory];
+                content.innerHTML = `
+                    <div class="page-header">
+                        <button class="back-btn" onclick="selectedCategory = null; renderBrowse()">← Back</button>
+                        <div class="page-title"><div class="page-title-icon">${cat.icon}</div>${cat.name}</div>
+                    </div>
+                    <div class="subcategory-grid">
+                        ${Object.values(cat.subCategories).map(s => {
+                            const count = s.items.length;
+                            return `
+                            <div class="item-card" onclick="selectedSubCategory = '${s.name}'; renderBrowse()">
+                                <div class="item-left">
+                                    <div class="item-icon">${s.icon}</div>
+                                    <div class="item-info">
+                                        <div class="item-name">${s.name}</div>
+                                        <div class="item-desc">${count} items</div>
+                                    </div>
+                                </div>
+                                <div style="font-size:20px; color:#ccc;">›</div>
+                            </div>
+                        `}).join('')}
+                    </div>
+                `;
+            } else {
+                const totalItems = Object.values(categories).reduce((sum, cat) => 
+                    sum + Object.values(cat.subCategories).reduce((s, sub) => s + sub.items.length, 0), 0);
+                
+                content.innerHTML = `
+                    <div class="browse-header">
+                        <h1>♻️ EcoSort</h1>
+                        <div class="browse-subtitle">Smart waste sorting for a better planet</div>
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" placeholder="Search ${totalItems}+ items...">
+                        </div>
+                    </div>
+                    
+                    <div class="section-header">
+                        <div class="section-title">🔥 Most Searched</div>
+                        <div class="section-count">${popularItems.length} items</div>
+                    </div>
+                    <div class="popular-items">
+                        ${popularItems.map(p => `
+                            <div class="popular-item" onclick="showItemDetail('${p.id}')">
+                                <div class="popular-icon">${p.icon}</div>
+                                <div class="popular-name">${p.name}</div>
+                                <span class="popular-badge badge-${p.badge}">${p.category}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="section-header">
+                        <div class="section-title">📂 All Categories</div>
+                        <div class="section-count">${Object.keys(categories).length} categories</div>
+                    </div>
+                    <div class="categories-grid">
+                        ${Object.values(categories).map(c => {
+                            const itemCount = Object.values(c.subCategories).reduce((sum, sub) => sum + sub.items.length, 0);
+                            return `
+                            <div class="category-card" onclick="selectedCategory = '${c.id}'; renderBrowse()">
+                                ${c.new ? '<div class="category-badge">NEW</div>' : ''}
+                                <div class="category-icon">${c.icon}</div>
+                                <div class="category-name">${c.name}</div>
+                                <div class="category-count">${itemCount} items</div>
+                            </div>
+                        `}).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        function showItemDetail(id) {
+            const item = findItem(id);
+            if (!item) return;
+            document.getElementById('content').innerHTML = `
+                <div class="detail-header">
+                    <div class="detail-icon">${item.icon}</div>
+                    <div class="detail-title">${item.name}</div>
+                    <div class="detail-category">${item.category}</div>
+                </div>
+                <div class="detail-content">
+                    <button class="back-btn" onclick="renderBrowse()">← Back</button>
+                    <div class="detail-section">
+                        <div class="section-title-detail"><span class="section-icon">🔧</span>How to Prepare</div>
+                        <ul>${item.preparation.map(p => `<li>${p}</li>`).join('')}</ul>
+                    </div>
+                    <div class="detail-section">
+                        <div class="section-title-detail"><span class="section-icon">💡</span>Why This Category?</div>
+                        <p>${item.reason}</p>
+                    </div>
+                    <div class="detail-section">
+                        <div class="section-title-detail"><span class="section-icon">📍</span>Local Notes</div>
+                        <p>${item.localNote}</p>
+                    </div>
+                    <div class="detail-section">
+                        <div class="section-title-detail"><span class="section-icon">✨</span>Fun Fact</div>
+                        <p>${item.funFact}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function findItem(id) {
+            for (const cat of Object.values(categories)) {
+                for (const sub of Object.values(cat.subCategories)) {
+                    const item = sub.items.find(i => i.id === id);
+                    if (item) return item;
+                }
+            }
+        }
+
+        function renderChat() {
+            document.getElementById('content').innerHTML = `
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>💬 Chat with EcoBot</h2>
+                        <div class="chat-subtitle">Get instant answers about any item!</div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        ${chatMessages.map(m => `
+                            <div class="message ${m.sender}">
+                                <div class="message-bubble">${m.text}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="chat-input-area">
+                        <div class="quick-buttons">
+                            <button class="quick-btn" onclick="sendQuick('Pizza boxes?')">🍕 Pizza?</button>
+                            <button class="quick-btn" onclick="sendQuick('Batteries?')">🔋 Batteries?</button>
+                            <button class="quick-btn" onclick="sendQuick('Plastic bottles?')">🍾 Plastic?</button>
+                            <button class="quick-btn" onclick="sendQuick('Compost?')">🌱 Compost?</button>
+                        </div>
+                        <div class="chat-input-box">
+                            <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter')sendMessage()">
+                            <button onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                const el = document.getElementById('chatMessages');
+                if (el) el.scrollTop = el.scrollHeight;
+            }, 100);
+        }
+
+        function sendQuick(text) {
+            document.getElementById('chatInput').value = text;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+            chatMessages.push({ sender: 'user', text });
+            input.value = '';
+            setTimeout(() => {
+                chatMessages.push({ sender: 'bot', text: getAIResponse(text) });
+                renderChat();
+            }, 600);
+            renderChat();
+        }
+
+        function renderLearn() {
+            document.getElementById('content').innerHTML = `
+                <div class="learn-content">
+                    <div class="learn-header-text">
+                        <h2>📚 Learn & Grow</h2>
+                        <p>Become a waste sorting expert!</p>
+                    </div>
+                    <div class="learn-cards">
+                        <div class="learn-card">
+                            <div class="learn-card-icon">♻️</div>
+                            <div class="learn-card-title">Recycling 101</div>
+                            <div class="learn-card-desc">Master the basics</div>
+                        </div>
+                        <div class="learn-card">
+                            <div class="learn-card-icon">🌱</div>
+                            <div class="learn-card-title">Composting Guide</div>
+                            <div class="learn-card-desc">Turn waste to gold</div>
+                        </div>
+                        <div class="learn-card">
+                            <div class="learn-card-icon">🌍</div>
+                            <div class="learn-card-title">Your Impact</div>
+                            <div class="learn-card-desc">See the difference</div>
+                        </div>
+                        <div class="learn-card">
+                            <div class="learn-card-icon">💡</div>
+                            <div class="learn-card-title">Myths Busted</div>
+                            <div class="learn-card-desc">Stop wishcycling</div>
+                        </div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-header">
+                            <div>
+                                <div class="impact-title">Your Impact</div>
+                                <div class="impact-subtitle">You're making a real difference!</div>
+                            </div>
+                            <div style="font-size:40px;">📈</div>
+                        </div>
+                        <div class="impact-stats">
+                            <div class="stat"><div class="stat-value">127</div><div class="stat-label">Items Sorted</div></div>
+                            <div class="stat"><div class="stat-value">45kg</div><div class="stat-label">CO₂ Saved</div></div>
+                            <div class="stat"><div class="stat-value">89%</div><div class="stat-label">Accuracy</div></div>
+                        </div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievements-title">🏆 Achievements</div>
+                        <div class="badges-grid">
+                            <div class="badge"><div class="badge-icon-achieve">🌱</div><div class="badge-name">First Sort</div></div>
+                            <div class="badge"><div class="badge-icon-achieve">♻️</div><div class="badge-name">Recycling Pro</div></div>
+                            <div class="badge"><div class="badge-icon-achieve">🔥</div><div class="badge-name">7-Day Streak</div></div>
+                            <div class="badge locked"><div class="badge-icon-achieve">🏆</div><div class="badge-name">Master Sorter</div></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        renderBrowse();
+    </script>
+</body>
+</html>
