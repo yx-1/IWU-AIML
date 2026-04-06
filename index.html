@@ -146,6 +146,78 @@ nav { position: sticky; top: 0; z-index: 50; background: rgba(250,249,247,0.92);
 .p2-chart-note { font-size: 10px; color: #b0ada8; margin-top: 8px; font-style: italic; }
 .p2-footer-note { font-size: 11px; color: #c0bdb8; border-top: 1px solid var(--border); padding-top: 14px; }
 
+/* ── Project 03: XAI ── */
+.p3-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; overflow: hidden; }
+.p3-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.p3-title { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; letter-spacing: -.7px; line-height: 1.1; margin-bottom: 6px; }
+.p3-title em { font-style: italic; color: var(--muted); }
+.p3-subtitle { font-size: 13px; color: var(--muted); font-weight: 300; max-width: 520px; line-height: 1.7; margin-bottom: 28px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+.p3-sec-label { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; letter-spacing: -.4px; margin-bottom: 14px; }
+.p3-divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+.p3-def-box { background: var(--subtle); border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; display: grid; grid-template-columns: 3px 1fr; gap: 0 16px; }
+.p3-def-accent { background: var(--accent); border-radius: 2px; }
+.p3-def-label { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+.p3-def-text { font-size: 13px; line-height: 1.75; color: #4a4845; font-weight: 300; }
+.p3-def-text strong { font-weight: 500; color: var(--text); }
+.p3-why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+.p3-why { background: var(--subtle); border-radius: 10px; padding: 13px 14px; }
+.p3-why-ico { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.p3-why-title { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.p3-why-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.p3-challenges { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.p3-challenge { display: grid; grid-template-columns: 32px 1fr auto; gap: 0 12px; align-items: start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.p3-ch-num { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--muted); padding-top: 1px; }
+.p3-ch-title { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.p3-ch-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.p3-badge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; white-space: nowrap; align-self: flex-start; margin-top: 1px; }
+.p3-badge-red { background: #fee2e2; color: #991b1b; }
+.p3-badge-amber { background: #fef9c3; color: #854d0e; }
+.p3-badge-blue { background: #dbeafe; color: #1e40af; }
+.p3-badge-purple { background: #ede9fe; color: #5b21b6; }
+.p3-metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 24px; }
+.p3-metric { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 13px 15px; }
+.p3-metric-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.p3-metric-name { font-size: 12px; font-weight: 500; color: var(--text); }
+.p3-metric-tag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+.p3-metric-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.p3-metric-score { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: -.4px; color: var(--text); min-width: 36px; }
+.p3-bar-bg { height: 4px; background: var(--border); border-radius: 3px; overflow: hidden; flex: 1; }
+.p3-bar { height: 100%; border-radius: 3px; }
+.p3-metric-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.p3-metric-eg { font-size: 10px; font-style: italic; color: #b0ada8; margin-top: 3px; }
+.p3-val-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 24px; }
+.p3-val-step { text-align: center; padding: 0 6px; position: relative; }
+.p3-val-step + .p3-val-step::before { content: '→'; position: absolute; left: -5px; top: 20px; font-size: 13px; color: var(--border); }
+.p3-val-circle { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+.p3-val-num { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--muted); }
+.p3-val-title { font-size: 11px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.p3-val-desc { font-size: 10px; color: var(--muted); line-height: 1.55; }
+.p3-tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 24px; }
+.p3-tech { background: var(--subtle); border-radius: 10px; padding: 13px 15px; }
+.p3-tech-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.p3-tech-name { font-size: 12px; font-weight: 500; color: var(--text); }
+.p3-tech-desc { font-size: 11px; color: var(--muted); line-height: 1.65; margin-bottom: 5px; }
+.p3-tech-used { font-size: 10px; color: #b0ada8; font-style: italic; }
+.p3-efforts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 24px; }
+.p3-effort { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 13px 15px; }
+.p3-effort-head { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.p3-effort-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.p3-effort-model { font-size: 13px; font-weight: 500; color: var(--text); }
+.p3-effort-maker { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+.p3-effort-rows { display: flex; flex-direction: column; }
+.p3-effort-row { font-size: 11px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); line-height: 1.55; display: flex; gap: 7px; }
+.p3-effort-row:last-child { border-bottom: none; }
+.p3-effort-bullet { color: var(--border); flex-shrink: 0; }
+.p3-trust { background: var(--subtle); border-radius: 12px; padding: 18px 20px; }
+.p3-trust-bar-track { height: 6px; border-radius: 3px; background: linear-gradient(to right, #fee2e2, #fef9c3, #dcfce7); margin: 10px 0 6px; }
+.p3-trust-markers { display: flex; justify-content: space-between; margin-bottom: 14px; }
+.p3-trust-marker { font-size: 10px; color: var(--muted); }
+.p3-trust-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.p3-trust-pillar { text-align: center; padding: 10px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+.p3-trust-pillar-title { font-size: 11px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.p3-trust-pillar-sub { font-size: 10px; color: var(--muted); line-height: 1.5; }
+.p3-footer-note { font-size: 11px; color: #c0bdb8; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 24px; }
+
 .placeholder { border:1.5px dashed var(--border); border-radius:14px; padding:32px 24px; display:flex; align-items:center; gap:14px; }
 .ph-icon { width:34px; height:34px; border-radius:8px; border:1.5px dashed var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .ph-title { font-size:14px; font-weight:500; color:#b5b2ae; margin-bottom:2px; }
@@ -487,6 +559,258 @@ footer { padding:36px 0; }
           </div>
 
           <p class="p2-footer-note">Costs are estimates from published research as of 2024. Most companies do not disclose exact training figures.</p>
+        </div>
+      </div>
+
+      <!-- ══ PROJECT 03 ══ -->
+      <div class="project-entry">
+        <div class="project-entry-header">
+          <div class="project-entry-left">
+            <span class="project-num">03</span>
+            <h3 class="project-entry-title">Explainable AI &amp; Model Transparency</h3>
+            <span class="project-entry-badge">Completed</span>
+          </div>
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <p class="project-entry-desc">A visual guide to Explainable AI — why transparency matters for models like GPT-4, Claude, Gemini, and LLaMA, the challenges involved, key validation metrics, and the techniques industry leaders use to make AI decisions understandable.</p>
+        <div class="project-entry-meta">
+          <span class="stack-item">HTML / CSS</span><span class="stack-item">SVG</span><span class="stack-item">XAI</span><span class="stack-item">Model Evaluation</span><span class="stack-item">AI Safety</span>
+        </div>
+
+        <div class="p3-wrap">
+          <p class="p3-eyebrow">A Visual Guide</p>
+          <h2 class="p3-title">Explainable AI<br/><em>&amp; Model Transparency</em></h2>
+          <p class="p3-subtitle">Why it matters that we can understand what AI is doing — and how the field is working to make that possible for models like GPT-4, Claude, Gemini, and LLaMA.</p>
+
+          <!-- Definition -->
+          <div class="p3-def-box">
+            <div class="p3-def-accent"></div>
+            <div>
+              <p class="p3-def-label">What is Explainable AI (XAI)?</p>
+              <p class="p3-def-text"><strong>Explainable AI</strong> refers to methods that make AI outputs and reasoning <strong>understandable to humans</strong>. Rather than treating a model as a black box, XAI reveals <em>why</em> a model reached a particular output — what it weighted, what patterns drove the decision, and where it might be wrong. Critical in healthcare, finance, and law, where opaque decisions carry real consequences.</p>
+            </div>
+          </div>
+
+          <!-- Why it matters -->
+          <p class="p3-sec-label">Why transparency matters</p>
+          <div class="p3-why-grid">
+            <div class="p3-why">
+              <div class="p3-why-ico" style="background:#dbeafe;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2a5 5 0 100 10A5 5 0 007 2z" stroke="#2563eb" stroke-width="1.3"/><path d="M7 5v3l2 1" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+              <div class="p3-why-title">Accountability</div>
+              <div class="p3-why-desc">When AI denies a loan or flags a scan, decision-makers need to justify the outcome. XAI creates an audit trail.</div>
+            </div>
+            <div class="p3-why">
+              <div class="p3-why-ico" style="background:#dcfce7;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><rect x="2" y="4" width="10" height="7" rx="2" stroke="#16a34a" stroke-width="1.3"/><path d="M5 4V3a2 2 0 014 0v1" stroke="#16a34a" stroke-width="1.3"/></svg></div>
+              <div class="p3-why-title">Safety</div>
+              <div class="p3-why-desc">Understanding failure modes lets engineers fix them before deployment. Opaque models can fail silently.</div>
+            </div>
+            <div class="p3-why">
+              <div class="p3-why-ico" style="background:#ede9fe;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 10l3-3 2 2 5-5" stroke="#7c3aed" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="p3-why-title">Regulation</div>
+              <div class="p3-why-desc">The EU AI Act and GDPR's "right to explanation" require human-readable justifications for automated decisions.</div>
+            </div>
+            <div class="p3-why">
+              <div class="p3-why-ico" style="background:#fef9c3;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="#ca8a04" stroke-width="1.3"/><path d="M3 12c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#ca8a04" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+              <div class="p3-why-title">Human oversight</div>
+              <div class="p3-why-desc">Experts can verify AI recommendations rather than blindly accepting them — essential in clinical and legal settings.</div>
+            </div>
+            <div class="p3-why">
+              <div class="p3-why-ico" style="background:#fee2e2;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 2l1.5 3 3.5.5-2.5 2.5.6 3.5L7 10l-3.1 1.5.6-3.5L2 5.5 5.5 5z" stroke="#dc2626" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+              <div class="p3-why-title">Bias detection</div>
+              <div class="p3-why-desc">XAI tools can reveal whether a model relies on protected attributes like race or gender to make decisions.</div>
+            </div>
+            <div class="p3-why">
+              <div class="p3-why-ico" style="background:#f0fdf4;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="#16a34a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="p3-why-title">Model improvement</div>
+              <div class="p3-why-desc">When developers understand which features a model relies on, they can improve training data more precisely.</div>
+            </div>
+          </div>
+
+          <hr class="p3-divider"/>
+
+          <!-- Challenges -->
+          <p class="p3-sec-label">Challenges in explainability</p>
+          <div class="p3-challenges">
+            <div class="p3-challenge">
+              <div class="p3-ch-num">01</div>
+              <div><p class="p3-ch-title">Scale &amp; complexity</p><p class="p3-ch-desc">Modern LLMs have hundreds of billions of parameters across dozens of layers. Even if you inspect individual weights, their combined effect is not interpretable — sheer scale makes intuitive explanation nearly impossible.</p></div>
+              <span class="p3-badge p3-badge-red">High difficulty</span>
+            </div>
+            <div class="p3-challenge">
+              <div class="p3-ch-num">02</div>
+              <div><p class="p3-ch-title">Black-box architecture</p><p class="p3-ch-desc">Transformers learn distributed representations — no single neuron "means" one thing. Attention weights give a partial picture but don't reliably reflect what the model is actually reasoning about.</p></div>
+              <span class="p3-badge p3-badge-red">High difficulty</span>
+            </div>
+            <div class="p3-challenge">
+              <div class="p3-ch-num">03</div>
+              <div><p class="p3-ch-title">Faithfulness of explanations</p><p class="p3-ch-desc">Post-hoc explanations may not reflect the model's actual reasoning. A model can generate a plausible-sounding justification while the real computational path was something entirely different.</p></div>
+              <span class="p3-badge p3-badge-amber">Medium difficulty</span>
+            </div>
+            <div class="p3-challenge">
+              <div class="p3-ch-num">04</div>
+              <div><p class="p3-ch-title">Proprietary restrictions</p><p class="p3-ch-desc">Most frontier models (GPT-4, Gemini, Claude) are closed-source. Researchers can only probe them via APIs, limiting mechanistic analysis without access to weights and internal activations.</p></div>
+              <span class="p3-badge p3-badge-blue">Access barrier</span>
+            </div>
+            <div class="p3-challenge">
+              <div class="p3-ch-num">05</div>
+              <div><p class="p3-ch-title">Regulatory fragmentation</p><p class="p3-ch-desc">The EU AI Act, US executive orders, and GDPR create overlapping and sometimes conflicting definitions of "explainability," making compliance-driven XAI a moving target for developers.</p></div>
+              <span class="p3-badge p3-badge-purple">Regulatory</span>
+            </div>
+          </div>
+
+          <hr class="p3-divider"/>
+
+          <!-- Metrics -->
+          <p class="p3-sec-label">Validation &amp; performance metrics</p>
+          <div class="p3-metrics-grid">
+            <div class="p3-metric">
+              <div class="p3-metric-head"><span class="p3-metric-name">Accuracy &amp; F1 Score</span><span class="p3-metric-tag">Classification</span></div>
+              <div class="p3-metric-row"><span class="p3-metric-score">F1</span><div class="p3-bar-bg"><div class="p3-bar" style="width:82%;background:#2563eb;"></div></div></div>
+              <p class="p3-metric-desc">F1 balances precision and recall — essential when classes are imbalanced. A model can hit 99% accuracy by always guessing the majority class.</p>
+              <p class="p3-metric-eg">GPT-4 scores 86.4% on MMLU, a multi-domain knowledge benchmark</p>
+            </div>
+            <div class="p3-metric">
+              <div class="p3-metric-head"><span class="p3-metric-name">Calibration (ECE)</span><span class="p3-metric-tag">Reliability</span></div>
+              <div class="p3-metric-row"><span class="p3-metric-score">ECE</span><div class="p3-bar-bg"><div class="p3-bar" style="width:65%;background:#7c3aed;"></div></div></div>
+              <p class="p3-metric-desc">Measures whether confidence scores are trustworthy. If a model says 90% confident, it should be right ~90% of the time. Poorly calibrated models mislead users about reliability.</p>
+              <p class="p3-metric-eg">Used to validate medical AI confidence outputs before clinical deployment</p>
+            </div>
+            <div class="p3-metric">
+              <div class="p3-metric-head"><span class="p3-metric-name">Robustness (OOD)</span><span class="p3-metric-tag">Stability</span></div>
+              <div class="p3-metric-row"><span class="p3-metric-score">OOD</span><div class="p3-bar-bg"><div class="p3-bar" style="width:55%;background:#d97706;"></div></div></div>
+              <p class="p3-metric-desc">Out-of-distribution testing checks how performance degrades on inputs differing from training data. Adversarial probing tests whether small input changes cause large unexpected output changes.</p>
+              <p class="p3-metric-eg">Testing LLaMA on prompts with typos, rephrasing, or unusual formatting</p>
+            </div>
+            <div class="p3-metric">
+              <div class="p3-metric-head"><span class="p3-metric-name">Hallucination rate</span><span class="p3-metric-tag">Factuality</span></div>
+              <div class="p3-metric-row"><span class="p3-metric-score">HAL</span><div class="p3-bar-bg"><div class="p3-bar" style="width:70%;background:#dc2626;"></div></div></div>
+              <p class="p3-metric-desc">Measures how often a model generates plausible-sounding but factually incorrect information. Benchmarks like TruthfulQA evaluate factual grounding — critical for legal and medical applications.</p>
+              <p class="p3-metric-eg">Claude scores 85.1% on TruthfulQA vs. GPT-3.5 at 58.6%</p>
+            </div>
+            <div class="p3-metric">
+              <div class="p3-metric-head"><span class="p3-metric-name">Human evaluation</span><span class="p3-metric-tag">Quality</span></div>
+              <div class="p3-metric-row"><span class="p3-metric-score">HE</span><div class="p3-bar-bg"><div class="p3-bar" style="width:75%;background:#16a34a;"></div></div></div>
+              <p class="p3-metric-desc">Raters score helpfulness, harmlessness, and honesty (Anthropic's HHH framework). Human eval captures nuance automated benchmarks miss, but is expensive and slow to scale.</p>
+              <p class="p3-metric-eg">RLHF preference ratings used in Claude and GPT-4's training pipelines</p>
+            </div>
+            <div class="p3-metric">
+              <div class="p3-metric-head"><span class="p3-metric-name">Task benchmarks</span><span class="p3-metric-tag">Capability</span></div>
+              <div class="p3-metric-row"><span class="p3-metric-score">BM</span><div class="p3-bar-bg"><div class="p3-bar" style="width:88%;background:#0891b2;"></div></div></div>
+              <p class="p3-metric-desc">Standardized suites (MMLU, BIG-Bench, HumanEval, HellaSwag) test specific capabilities: knowledge, reasoning, coding, and common-sense inference. Enables comparison across models.</p>
+              <p class="p3-metric-eg">HumanEval measures code generation — GPT-4 solves 67%, Gemini Ultra 74.4%</p>
+            </div>
+          </div>
+
+          <!-- Validation lifecycle -->
+          <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Validation lifecycle</p>
+          <div class="p3-val-steps" style="margin-bottom:24px;">
+            <div class="p3-val-step"><div class="p3-val-circle"><span class="p3-val-num">1</span></div><div class="p3-val-title">Offline eval</div><div class="p3-val-desc">Benchmarks run against held-out test data before any deployment</div></div>
+            <div class="p3-val-step"><div class="p3-val-circle"><span class="p3-val-num">2</span></div><div class="p3-val-title">Red-teaming</div><div class="p3-val-desc">Adversarial probing for harmful outputs, jailbreaks, factual errors</div></div>
+            <div class="p3-val-step"><div class="p3-val-circle"><span class="p3-val-num">3</span></div><div class="p3-val-title">Human review</div><div class="p3-val-desc">Expert raters score helpfulness, accuracy, and safety across diverse prompts</div></div>
+            <div class="p3-val-step"><div class="p3-val-circle"><span class="p3-val-num">4</span></div><div class="p3-val-title">Monitoring</div><div class="p3-val-desc">Production traffic analyzed for drift, regressions, and novel failure modes</div></div>
+          </div>
+
+          <hr class="p3-divider"/>
+
+          <!-- XAI Techniques -->
+          <p class="p3-sec-label">XAI techniques in practice</p>
+          <div class="p3-tech-grid">
+            <div class="p3-tech">
+              <div class="p3-tech-head"><span class="p3-tech-name">LIME</span><span class="p3-badge p3-badge-red" style="background:#dcfce7;color:#166534;">Post-hoc</span></div>
+              <p class="p3-tech-desc">Builds a simple interpretable model around a single prediction by perturbing inputs and observing output changes — identifying which features mattered most for that specific decision.</p>
+              <p class="p3-tech-used">Used in: financial credit scoring, spam detection</p>
+            </div>
+            <div class="p3-tech">
+              <div class="p3-tech-head"><span class="p3-tech-name">SHAP</span><span class="p3-badge" style="background:#dcfce7;color:#166534;">Post-hoc</span></div>
+              <p class="p3-tech-desc">Uses cooperative game theory to assign each input a fair contribution score. More mathematically rigorous than LIME and works across model architectures.</p>
+              <p class="p3-tech-used">Used in: healthcare diagnostics, fraud detection at banks</p>
+            </div>
+            <div class="p3-tech">
+              <div class="p3-tech-head"><span class="p3-tech-name">Attention visualization</span><span class="p3-badge p3-badge-blue">Intrinsic</span></div>
+              <p class="p3-tech-desc">Maps which tokens a transformer attends to when generating output. Provides a visual window into model reasoning — though attention weights aren't always a faithful proxy for logic.</p>
+              <p class="p3-tech-used">Used in: NLP model debugging, translation quality analysis</p>
+            </div>
+            <div class="p3-tech">
+              <div class="p3-tech-head"><span class="p3-tech-name">Mechanistic interpretability</span><span class="p3-badge p3-badge-purple">Research</span></div>
+              <p class="p3-tech-desc">Reverse-engineers neural networks by identifying circuits and features inside the model. Anthropic's work on "superposition" and "features as directions" is a leading example.</p>
+              <p class="p3-tech-used">Used in: Anthropic safety research, academic AI labs</p>
+            </div>
+            <div class="p3-tech">
+              <div class="p3-tech-head"><span class="p3-tech-name">Chain-of-thought prompting</span><span class="p3-badge p3-badge-amber">Behavioral</span></div>
+              <p class="p3-tech-desc">Asks the model to reason step-by-step before a final answer. Surfaces intermediate reasoning that can be audited — dramatically improving the verifiability of outputs.</p>
+              <p class="p3-tech-used">Used in: GPT-4, Claude, Gemini — enabled by default in many interfaces</p>
+            </div>
+            <div class="p3-tech">
+              <div class="p3-tech-head"><span class="p3-tech-name">Constitutional AI (CAI)</span><span class="p3-badge p3-badge-purple">Alignment</span></div>
+              <p class="p3-tech-desc">Anthropic's approach has the model critique its own outputs against written principles — creating a transparent, auditable alignment process that reduces reliance on opaque human preference labels.</p>
+              <p class="p3-tech-used">Used in: Claude model family (Anthropic)</p>
+            </div>
+          </div>
+
+          <hr class="p3-divider"/>
+
+          <!-- Industry efforts -->
+          <p class="p3-sec-label">What leading labs are doing</p>
+          <div class="p3-efforts-grid">
+            <div class="p3-effort">
+              <div class="p3-effort-head"><div class="p3-effort-dot" style="background:#2563eb;"></div><span class="p3-effort-model">GPT-4</span><span class="p3-effort-maker mk-openai">OpenAI</span></div>
+              <div class="p3-effort-rows">
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>System card &amp; model card published at launch with safety evaluations</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Chain-of-thought reasoning surfaced to users in GPT-4o</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Evals framework (open-sourced) for standardized capability testing</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Preparedness framework tracking frontier model risk levels</div>
+              </div>
+            </div>
+            <div class="p3-effort">
+              <div class="p3-effort-head"><div class="p3-effort-dot" style="background:#7c3aed;"></div><span class="p3-effort-model">Claude</span><span class="p3-effort-maker mk-anthropic">Anthropic</span></div>
+              <div class="p3-effort-rows">
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Constitutional AI: model critiques itself against written principles</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Mechanistic interpretability research on circuits and features</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Responsible Scaling Policy (RSP) with public capability thresholds</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Published research on superposition and feature geometry in transformers</div>
+              </div>
+            </div>
+            <div class="p3-effort">
+              <div class="p3-effort-head"><div class="p3-effort-dot" style="background:#16a34a;"></div><span class="p3-effort-model">Gemini</span><span class="p3-effort-maker mk-google">Google</span></div>
+              <div class="p3-effort-rows">
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>PAIR (People + AI Research) group building human-centered XAI tools</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>What-If Tool and TCAV for concept-based explanations</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Model cards published with bias evaluation results for Gemini family</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>LLM-graded evaluation pipelines using Gemini to assess Gemini</div>
+              </div>
+            </div>
+            <div class="p3-effort">
+              <div class="p3-effort-head"><div class="p3-effort-dot" style="background:#ca8a04;"></div><span class="p3-effort-model">LLaMA</span><span class="p3-effort-maker mk-meta">Meta</span></div>
+              <div class="p3-effort-rows">
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Open weights allow full mechanistic analysis by the research community</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Detailed technical report with training data, compute, and eval results</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Llama Guard: a separate classifier model for safety evaluation</div>
+                <div class="p3-effort-row"><span class="p3-effort-bullet">–</span>Purple Llama: open-source safety tools for third-party developers</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust spectrum -->
+          <div class="p3-trust">
+            <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Building toward trustworthy AI</p>
+            <p style="font-size:12px;color:var(--muted);font-weight:300;">Explainability, validation, and transparency together move AI from opaque to trusted</p>
+            <div class="p3-trust-bar-track"></div>
+            <div class="p3-trust-markers">
+              <span class="p3-trust-marker">Opaque &amp; risky</span>
+              <span class="p3-trust-marker">Partially explainable</span>
+              <span class="p3-trust-marker">Transparent &amp; trusted</span>
+            </div>
+            <div class="p3-trust-pillars">
+              <div class="p3-trust-pillar"><div class="p3-trust-pillar-title">Explainability</div><div class="p3-trust-pillar-sub">LIME · SHAP · Attention · Mechanistic interpretability</div></div>
+              <div class="p3-trust-pillar"><div class="p3-trust-pillar-title">Validation</div><div class="p3-trust-pillar-sub">Benchmarks · Red-teaming · Human eval · OOD testing</div></div>
+              <div class="p3-trust-pillar"><div class="p3-trust-pillar-title">Transparency</div><div class="p3-trust-pillar-sub">Model cards · RSPs · Open weights · System prompts</div></div>
+            </div>
+          </div>
+
+          <p class="p3-footer-note">Sources: Anthropic research blog, OpenAI system cards, Google PAIR, Meta LLaMA technical reports, EU AI Act documentation.</p>
         </div>
       </div>
 
