@@ -87,6 +87,43 @@ nav { position: sticky; top: 0; z-index: 50; background: rgba(250,249,247,0.92);
 .ig-tag { display:inline-flex; font-size:9px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:20px; align-self:flex-start; }
 .ig-t-sup { background:#dcfce7; color:#166534; } .ig-t-uns { background:#dbeafe; color:#1e40af; } .ig-t-dl { background:#ede9fe; color:#5b21b6; }
 
+/* ── Project 04: Pre-trained Model Decision Matrix ── */
+.p4-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; overflow: hidden; }
+.p4-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.p4-title { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; letter-spacing: -.7px; line-height: 1.1; margin-bottom: 6px; }
+.p4-title em { font-style: italic; color: var(--muted); }
+.p4-subtitle { font-size: 13px; color: var(--muted); font-weight: 300; max-width: 600px; line-height: 1.7; margin-bottom: 28px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+.p4-matrix { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 12px; }
+.p4-matrix th { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; text-align: left; border-bottom: 2px solid var(--border); background: var(--subtle); }
+.p4-matrix th:first-child { border-radius: 8px 0 0 0; } .p4-matrix th:last-child { border-radius: 0 8px 0 0; }
+.p4-matrix td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; line-height: 1.5; color: #4a4845; font-size: 12px; }
+.p4-matrix tr:last-child td { border-bottom: none; }
+.p4-matrix tr:hover td { background: #faf9f7; }
+.p4-model-name { font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text); letter-spacing: -.3px; display: block; margin-bottom: 1px; }
+.p4-model-maker { font-size: 10px; color: var(--muted); }
+.p4-dbadge { display: inline-flex; font-size: 9px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 10px; }
+.p4-nlp  { background: #ede9fe; color: #5b21b6; }
+.p4-cv   { background: #dbeafe; color: #1e40af; }
+.p4-tabd { background: #dcfce7; color: #166534; }
+.p4-bar-wrap { display: flex; align-items: center; gap: 6px; }
+.p4-bar-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; min-width: 50px; }
+.p4-bar-fill { height: 100%; border-radius: 3px; }
+.p4-bar-lbl { font-size: 11px; font-weight: 500; color: var(--text); min-width: 24px; text-align: right; }
+.fill-acc { background: #2563eb; } .fill-spd { background: #16a34a; } .fill-xai { background: #f59e0b; }
+.p4-note { font-size: 11px; color: var(--muted); font-weight: 300; line-height: 1.6; }
+.p4-section-lbl { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 22px 0 10px; }
+.p4-recs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.p4-rec { border-radius: 10px; padding: 14px 16px; border: 1px solid; }
+.p4-rec-nlp  { background: #f5f3ff; border-color: #ddd6fe; }
+.p4-rec-cv   { background: #eff6ff; border-color: #bfdbfe; }
+.p4-rec-tab  { background: #f0fdf4; border-color: #bbf7d0; }
+.p4-rec-head { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
+.p4-rec-nlp .p4-rec-head { color: #6d28d9; } .p4-rec-cv .p4-rec-head { color: #1d4ed8; } .p4-rec-tab .p4-rec-head { color: #15803d; }
+.p4-rec-model { font-family: 'DM Serif Display', serif; font-size: 15px; letter-spacing: -.3px; color: var(--text); margin-bottom: 3px; }
+.p4-rec-reason { font-size: 11px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+.p4-footnote { font-size: 11px; color: var(--muted); font-weight: 300; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); line-height: 1.6; }
+@media(max-width:700px){ .p4-recs{grid-template-columns:1fr;} }
+
 /* ── Project 02: LLM Training ── */
 .p2-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; overflow: hidden; }
 .p2-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
@@ -811,6 +848,207 @@ footer { padding:36px 0; }
           </div>
 
           <p class="p3-footer-note">Sources: Anthropic research blog, OpenAI system cards, Google PAIR, Meta LLaMA technical reports, EU AI Act documentation.</p>
+        </div>
+      </div>
+
+      <!-- ══ PROJECT 04 ══ -->
+      <div class="project-entry">
+        <div class="project-entry-header">
+          <div class="project-entry-left">
+            <span class="project-num">04</span>
+            <h3 class="project-entry-title">Pre-trained Model Decision Matrix</h3>
+            <span class="project-entry-badge">Completed</span>
+          </div>
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <p class="project-entry-desc">A structured comparison of pre-trained models across NLP/Generative AI, Computer Vision, and Tabular domains — evaluating trade-offs between model size, accuracy, inference speed, and explainability to guide practical model selection.</p>
+        <div class="project-entry-meta">
+          <span class="stack-item">Model Evaluation</span>
+          <span class="stack-item">Decision Matrix</span>
+          <span class="stack-item">NLP · Vision · Tabular</span>
+          <span class="stack-item">Explainability</span>
+        </div>
+
+        <div class="p4-wrap">
+          <div class="p4-eyebrow">Assignment 04 · Model Selection</div>
+          <div class="p4-title">Pre-trained Model <em>Decision Matrix</em></div>
+          <p class="p4-subtitle">Comparing 8 models across NLP/Generative AI, Computer Vision, and Tabular domains on size, accuracy, inference speed, and explainability — to surface the right tool for the right task.</p>
+
+          <!-- ── MATRIX TABLE ── -->
+          <p class="p4-section-lbl">Comparison matrix</p>
+          <div style="overflow-x:auto;">
+          <table class="p4-matrix">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Domain</th>
+                <th>Size</th>
+                <th>Accuracy</th>
+                <th>Speed</th>
+                <th>Explainability</th>
+                <th>Best for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- NLP / Generative AI -->
+              <tr>
+                <td><span class="p4-model-name">GPT-4o</span><span class="p4-model-maker">OpenAI</span></td>
+                <td><span class="p4-dbadge p4-nlp">NLP / GenAI</span></td>
+                <td>~200B params<br/><span style="color:var(--muted);font-size:11px;">Very large</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:96%"></div></div><span class="p4-bar-lbl">96</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:55%"></div></div><span class="p4-bar-lbl">55</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:30%"></div></div><span class="p4-bar-lbl">Low</span></div>
+                </td>
+                <td style="font-size:11px;">Complex reasoning, coding, multimodal tasks</td>
+              </tr>
+              <tr>
+                <td><span class="p4-model-name">BERT-base</span><span class="p4-model-maker">Google</span></td>
+                <td><span class="p4-dbadge p4-nlp">NLP / GenAI</span></td>
+                <td>110M params<br/><span style="color:var(--muted);font-size:11px;">Small</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:72%"></div></div><span class="p4-bar-lbl">72</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:85%"></div></div><span class="p4-bar-lbl">85</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:60%"></div></div><span class="p4-bar-lbl">Med</span></div>
+                </td>
+                <td style="font-size:11px;">Classification, NER, sentence embeddings</td>
+              </tr>
+              <tr>
+                <td><span class="p4-model-name">Gemini 1.5 Flash</span><span class="p4-model-maker">Google</span></td>
+                <td><span class="p4-dbadge p4-nlp">NLP / GenAI</span></td>
+                <td>~8B params<br/><span style="color:var(--muted);font-size:11px;">Medium</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:82%"></div></div><span class="p4-bar-lbl">82</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:90%"></div></div><span class="p4-bar-lbl">90</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:35%"></div></div><span class="p4-bar-lbl">Low</span></div>
+                </td>
+                <td style="font-size:11px;">Fast summarisation, lightweight generation</td>
+              </tr>
+              <!-- Computer Vision -->
+              <tr>
+                <td><span class="p4-model-name">EfficientNet-B7</span><span class="p4-model-maker">Google</span></td>
+                <td><span class="p4-dbadge p4-cv">Computer Vision</span></td>
+                <td>66M params<br/><span style="color:var(--muted);font-size:11px;">Medium</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:88%"></div></div><span class="p4-bar-lbl">88</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:60%"></div></div><span class="p4-bar-lbl">60</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:55%"></div></div><span class="p4-bar-lbl">Med</span></div>
+                </td>
+                <td style="font-size:11px;">High-accuracy image classification</td>
+              </tr>
+              <tr>
+                <td><span class="p4-model-name">MobileNetV3</span><span class="p4-model-maker">Google</span></td>
+                <td><span class="p4-dbadge p4-cv">Computer Vision</span></td>
+                <td>5.4M params<br/><span style="color:var(--muted);font-size:11px;">Very small</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:75%"></div></div><span class="p4-bar-lbl">75</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:97%"></div></div><span class="p4-bar-lbl">97</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:55%"></div></div><span class="p4-bar-lbl">Med</span></div>
+                </td>
+                <td style="font-size:11px;">Edge devices, mobile, real-time inference</td>
+              </tr>
+              <tr>
+                <td><span class="p4-model-name">ViT-L/16</span><span class="p4-model-maker">Google</span></td>
+                <td><span class="p4-dbadge p4-cv">Computer Vision</span></td>
+                <td>307M params<br/><span style="color:var(--muted);font-size:11px;">Large</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:91%"></div></div><span class="p4-bar-lbl">91</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:45%"></div></div><span class="p4-bar-lbl">45</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:65%"></div></div><span class="p4-bar-lbl">Med</span></div>
+                </td>
+                <td style="font-size:11px;">Research, high-accuracy vision tasks</td>
+              </tr>
+              <!-- Tabular -->
+              <tr>
+                <td><span class="p4-model-name">XGBoost</span><span class="p4-model-maker">DMLC</span></td>
+                <td><span class="p4-dbadge p4-tabd">Tabular</span></td>
+                <td>Ensemble trees<br/><span style="color:var(--muted);font-size:11px;">Lightweight</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:85%"></div></div><span class="p4-bar-lbl">85</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:88%"></div></div><span class="p4-bar-lbl">88</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:80%"></div></div><span class="p4-bar-lbl">High</span></div>
+                </td>
+                <td style="font-size:11px;">Finance, fraud detection, structured data</td>
+              </tr>
+              <tr>
+                <td><span class="p4-model-name">LightGBM</span><span class="p4-model-maker">Microsoft</span></td>
+                <td><span class="p4-dbadge p4-tabd">Tabular</span></td>
+                <td>Ensemble trees<br/><span style="color:var(--muted);font-size:11px;">Lightweight</span></td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-acc" style="width:84%"></div></div><span class="p4-bar-lbl">84</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-spd" style="width:95%"></div></div><span class="p4-bar-lbl">95</span></div>
+                </td>
+                <td>
+                  <div class="p4-bar-wrap"><div class="p4-bar-track"><div class="p4-bar-fill fill-xai" style="width:80%"></div></div><span class="p4-bar-lbl">High</span></div>
+                </td>
+                <td style="font-size:11px;">Large tabular datasets, fast iteration</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+
+          <!-- ── BAR LEGEND ── -->
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);"><div style="width:20px;height:5px;border-radius:3px;background:#2563eb;"></div>Accuracy</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);"><div style="width:20px;height:5px;border-radius:3px;background:#16a34a;"></div>Speed</div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);"><div style="width:20px;height:5px;border-radius:3px;background:#f59e0b;"></div>Explainability</div>
+            <span style="font-size:11px;color:var(--muted);">· Bars are relative scores (0–100) for comparison within domain.</span>
+          </div>
+
+          <!-- ── RECOMMENDATIONS ── -->
+          <p class="p4-section-lbl">Recommendations by scenario</p>
+          <div class="p4-recs">
+            <div class="p4-rec p4-rec-nlp">
+              <div class="p4-rec-head">NLP / Generative AI</div>
+              <div class="p4-rec-model">GPT-4o for quality<br/>BERT for efficiency</div>
+              <p class="p4-rec-reason">Use GPT-4o when output quality is paramount and latency is acceptable. Switch to BERT for fast, explainable classification tasks where a smaller footprint matters.</p>
+            </div>
+            <div class="p4-rec p4-rec-cv">
+              <div class="p4-rec-head">Computer Vision</div>
+              <div class="p4-rec-model">MobileNetV3 for edge<br/>EfficientNet-B7 for accuracy</div>
+              <p class="p4-rec-reason">MobileNetV3 is the clear choice for on-device or real-time inference. EfficientNet-B7 wins when accuracy is the priority and compute is available.</p>
+            </div>
+            <div class="p4-rec p4-rec-tab">
+              <div class="p4-rec-head">Tabular Data</div>
+              <div class="p4-rec-model">LightGBM for speed<br/>XGBoost for interpretability</div>
+              <p class="p4-rec-reason">Both are strong choices for structured data. LightGBM is faster on large datasets; XGBoost offers slightly better out-of-the-box explainability via SHAP integration.</p>
+            </div>
+          </div>
+
+          <p class="p4-footnote">Accuracy scores are relative benchmark approximations (ImageNet Top-1 for CV; GLUE/MT-Bench for NLP; Kaggle leaderboard averages for Tabular). Speed scores reflect relative inference latency on standardised hardware. Sources: official model cards, Papers With Code, Hugging Face model hub.</p>
         </div>
       </div>
 
