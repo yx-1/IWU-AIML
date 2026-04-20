@@ -43,18 +43,28 @@ nav { position: sticky; top: 0; z-index: 50; background: rgba(250,249,247,0.92);
 .meta-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
 .meta-value { font-size: 13px; font-weight: 500; color: var(--text); }
 .meta-value a { color: var(--accent); text-decoration: none; }
-.projects-list { display: flex; flex-direction: column; gap: 64px; }
-.project-entry-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+.projects-list { display: flex; flex-direction: column; gap: 24px; }
+.project-entry { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: box-shadow .2s; }
+.project-entry:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+.project-entry-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 20px; flex-wrap: wrap; gap: 12px; cursor: pointer; user-select: none; background: var(--surface); transition: background .15s; }
+.project-entry-header:hover { background: var(--subtle); }
+.project-entry-header.open { border-bottom: 1px solid var(--border); }
 .project-entry-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .project-num { font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--muted); }
 .project-entry-title { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; letter-spacing: -.5px; color: var(--text); }
 .project-entry-badge { font-size: 10px; font-weight: 500; padding: 3px 9px; border-radius: 10px; background: #dcfce7; color: #15803d; }
+.project-chevron { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .25s, background .15s; background: var(--surface); margin-left: 8px; }
+.project-entry-header:hover .project-chevron { background: var(--bg); }
+.project-chevron svg { transition: transform .25s; }
+.project-chevron.open svg { transform: rotate(180deg); }
+.project-body { padding: 24px 24px 28px; background: var(--surface); display: none; }
+.project-body.open { display: block; }
 .project-entry-desc { font-size: 14px; line-height: 1.75; color: #6a6762; font-weight: 300; max-width: 640px; margin-bottom: 16px; }
 .project-entry-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
 .stack-item { font-size: 11px; color: var(--muted); background: var(--subtle); border-radius: 4px; padding: 3px 9px; }
 .gh-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; color: var(--muted); text-decoration: none; padding: 4px 12px; border: 1px solid var(--border); border-radius: 5px; transition: color .15s, border-color .15s; white-space: nowrap; }
 .gh-link:hover { color: var(--text); border-color: #c0bdb8; }
-.infographic-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; overflow: hidden; }
+.infographic-wrap { background: var(--surface); border-radius: 10px; padding: 24px 20px; overflow: hidden; background: #faf9f7; }
 
 /* ── Project 01: ML Algorithms ── */
 .ig-eye { font-family: 'DM Sans',sans-serif; font-size: 10px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; text-align:center; }
@@ -388,11 +398,15 @@ footer { padding:36px 0; }
             <h3 class="project-entry-title">Machine Learning Algorithms Overview</h3>
             <span class="project-entry-badge">Completed</span>
           </div>
-          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link" onclick="event.stopPropagation()">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             View on GitHub
           </a>
+          <div class="project-chevron open">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
+        <div class="project-body open">
         <p class="project-entry-desc">An interactive visual guide to 10 core ML algorithms across Supervised, Unsupervised, and Deep Learning. Each algorithm includes a custom diagram, plain-language explanation, and a real-world use case.</p>
         <div class="project-entry-meta">
           <span class="stack-item">HTML / CSS</span><span class="stack-item">SVG</span><span class="stack-item">Data Visualization</span><span class="stack-item">Machine Learning</span>
@@ -502,6 +516,7 @@ footer { padding:36px 0; }
             </div>
           </div>
         </div>
+        </div><!-- .project-body -->
       </div>
 
       <!-- ══ PROJECT 02 ══ -->
@@ -512,11 +527,15 @@ footer { padding:36px 0; }
             <h3 class="project-entry-title">How AI Language Models Are Trained</h3>
             <span class="project-entry-badge">Completed</span>
           </div>
-          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link" onclick="event.stopPropagation()">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             View on GitHub
           </a>
+          <div class="project-chevron open">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
+        <div class="project-body open">
         <p class="project-entry-desc">A plain-language visual guide to the full LLM training pipeline — from raw data collection to deployment — with real cost and compute data from GPT-4, Claude, Gemini Ultra, and LLaMA 3.</p>
         <div class="project-entry-meta">
           <span class="stack-item">HTML / CSS</span><span class="stack-item">SVG</span><span class="stack-item">Chart.js</span><span class="stack-item">Generative AI</span><span class="stack-item">Data Visualization</span>
@@ -650,6 +669,7 @@ footer { padding:36px 0; }
 
           <p class="p2-footer-note">Costs are estimates from published research as of 2024. Most companies do not disclose exact training figures.</p>
         </div>
+        </div><!-- .project-body -->
       </div>
 
       <!-- ══ PROJECT 03 ══ -->
@@ -660,11 +680,15 @@ footer { padding:36px 0; }
             <h3 class="project-entry-title">Explainable AI &amp; Model Transparency</h3>
             <span class="project-entry-badge">Completed</span>
           </div>
-          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link" onclick="event.stopPropagation()">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             View on GitHub
           </a>
+          <div class="project-chevron open">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
+        <div class="project-body open">
         <p class="project-entry-desc">A visual guide to Explainable AI — why transparency matters for models like GPT-4, Claude, Gemini, and LLaMA, the challenges involved, key validation metrics, and the techniques industry leaders use to make AI decisions understandable.</p>
         <div class="project-entry-meta">
           <span class="stack-item">HTML / CSS</span><span class="stack-item">SVG</span><span class="stack-item">XAI</span><span class="stack-item">Model Evaluation</span><span class="stack-item">AI Safety</span>
@@ -902,6 +926,7 @@ footer { padding:36px 0; }
 
           <p class="p3-footer-note">Sources: Anthropic research blog, OpenAI system cards, Google PAIR, Meta LLaMA technical reports, EU AI Act documentation.</p>
         </div>
+        </div><!-- .project-body -->
       </div>
 
       <!-- ══ PROJECT 04 ══ -->
@@ -912,11 +937,15 @@ footer { padding:36px 0; }
             <h3 class="project-entry-title">Pre-trained Model Decision Matrix</h3>
             <span class="project-entry-badge">Completed</span>
           </div>
-          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link" onclick="event.stopPropagation()">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             View on GitHub
           </a>
+          <div class="project-chevron open">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
+        <div class="project-body open">
         <p class="project-entry-desc">A structured comparison of pre-trained models across NLP/Generative AI, Computer Vision, and Tabular domains — evaluating trade-offs between model size, accuracy, inference speed, and explainability to guide practical model selection.</p>
         <div class="project-entry-meta">
           <span class="stack-item">Model Evaluation</span>
@@ -1103,6 +1132,7 @@ footer { padding:36px 0; }
 
           <p class="p4-footnote">Accuracy scores are relative benchmark approximations (ImageNet Top-1 for CV; GLUE/MT-Bench for NLP; Kaggle leaderboard averages for Tabular). Speed scores reflect relative inference latency on standardised hardware. Sources: official model cards, Papers With Code, Hugging Face model hub.</p>
         </div>
+        </div><!-- .project-body -->
       </div>
 
       <!-- ══ PROJECT 05 ══ -->
@@ -1113,11 +1143,15 @@ footer { padding:36px 0; }
             <h3 class="project-entry-title">Neural Network Components &amp; Playground Experiment</h3>
             <span class="project-entry-badge">Completed</span>
           </div>
-          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link" onclick="event.stopPropagation()">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             View on GitHub
           </a>
+          <div class="project-chevron open">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
+        <div class="project-body open">
         <p class="project-entry-desc">A visual guide to the core components of neural networks — layers, neurons, weights, activation functions, loss functions, and optimizers — paired with a hands-on TensorFlow Playground experiment classifying a circular dataset.</p>
         <div class="project-entry-meta">
           <span class="stack-item">Neural Networks</span>
@@ -1347,6 +1381,7 @@ footer { padding:36px 0; }
           </div>
 
         </div><!-- .p5-wrap -->
+        </div><!-- .project-body -->
       </div><!-- project-entry -->
 
       <!-- ══ PLACEHOLDER ══ -->
@@ -1395,6 +1430,20 @@ new Chart(document.getElementById('p2chart'), {
       x: { ticks: { font:{size:11}, color:'#8a8680', autoSkip: false, maxRotation: 0 }, grid: { display:false }, border: { display:false } }
     }
   }
+});
+</script>
+<script>
+document.querySelectorAll('.project-entry-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.project-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    header.classList.toggle('open', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  });
+  // Start open
+  header.classList.add('open');
 });
 </script>
 </body>
