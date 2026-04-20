@@ -87,6 +87,59 @@ nav { position: sticky; top: 0; z-index: 50; background: rgba(250,249,247,0.92);
 .ig-tag { display:inline-flex; font-size:9px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:20px; align-self:flex-start; }
 .ig-t-sup { background:#dcfce7; color:#166534; } .ig-t-uns { background:#dbeafe; color:#1e40af; } .ig-t-dl { background:#ede9fe; color:#5b21b6; }
 
+/* ── Project 05: Neural Networks ── */
+.p5-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 28px;overflow:hidden}
+.p5-eyebrow{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.p5-title{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;letter-spacing:-.7px;line-height:1.1;margin-bottom:6px}
+.p5-title em{font-style:italic;color:var(--muted)}
+.p5-subtitle{font-size:13px;color:var(--muted);font-weight:300;max-width:600px;line-height:1.7;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.p5-section-lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:24px 0 14px}
+.p5-arch{width:100%;border-radius:10px;background:#f7f5f2;padding:20px 16px;margin-bottom:8px;overflow:hidden}
+.p5-arch svg{width:100%;display:block}
+.p5-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:4px}
+.p5-card{border-radius:10px;padding:14px 15px;border:1px solid var(--border);background:var(--surface)}
+.p5-card-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.p5-card-name{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
+.p5-card-desc{font-size:11px;color:var(--muted);line-height:1.55}
+.p5-card-formula{font-size:10px;font-family:monospace;color:#6d28d9;background:#f5f3ff;border-radius:4px;padding:3px 6px;margin-top:5px;display:inline-block}
+.p5-exp{border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-top:4px}
+.p5-exp-head{background:var(--subtle);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border)}
+.p5-exp-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text)}
+.p5-exp-badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;background:#dcfce7;color:#15803d}
+.p5-exp-body{display:grid;grid-template-columns:1fr 1fr}
+.p5-exp-col{padding:16px 18px}
+.p5-exp-col+.p5-exp-col{border-left:1px solid var(--border)}
+.p5-exp-col-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.p5-exp-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f0ede8;font-size:12px}
+.p5-exp-row:last-child{border-bottom:none}
+.p5-exp-key{color:var(--muted)}
+.p5-exp-val{font-weight:500;color:var(--text)}
+.p5-exp-val.good{color:#15803d}
+.p5-exp-finding{padding:14px 18px;border-top:1px solid var(--border);font-size:12px;color:#4a4845;line-height:1.65;font-weight:300}
+.p5-exp-finding strong{font-weight:500;color:var(--text)}
+.p5-loss-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.p5-loss-box{border-radius:8px;padding:12px 14px;border:1px solid}
+.p5-loss-before{background:#fff7ed;border-color:#fed7aa}
+.p5-loss-after{background:#f0fdf4;border-color:#bbf7d0}
+.p5-loss-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.p5-loss-before .p5-loss-label{color:#c2410c}
+.p5-loss-after .p5-loss-label{color:#15803d}
+.p5-loss-num{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.5px}
+.p5-loss-before .p5-loss-num{color:#ea580c}
+.p5-loss-after .p5-loss-num{color:#16a34a}
+.p5-loss-sub{font-size:10px;color:var(--muted);margin-top:1px}
+.p5-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.p5-sum-card{border-radius:10px;padding:14px 15px;border:1px solid}
+.p5-sum-card:nth-child(1){background:#f0fdf4;border-color:#bbf7d0}
+.p5-sum-card:nth-child(2){background:#eff6ff;border-color:#bfdbfe}
+.p5-sum-card:nth-child(3){background:#f5f3ff;border-color:#ddd6fe}
+.p5-sum-head{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;margin-bottom:5px}
+.p5-sum-card:nth-child(1) .p5-sum-head{color:#15803d}
+.p5-sum-card:nth-child(2) .p5-sum-head{color:#1d4ed8}
+.p5-sum-card:nth-child(3) .p5-sum-head{color:#6d28d9}
+.p5-sum-text{font-size:11px;color:var(--muted);line-height:1.55}
+@media(max-width:700px){.p5-grid{grid-template-columns:1fr 1fr}.p5-exp-body{grid-template-columns:1fr}.p5-exp-col+.p5-exp-col{border-left:none;border-top:1px solid var(--border)}.p5-loss-compare,.p5-summary{grid-template-columns:1fr}}
+
 /* ── Project 04: Pre-trained Model Decision Matrix ── */
 .p4-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; overflow: hidden; }
 .p4-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
@@ -1051,6 +1104,250 @@ footer { padding:36px 0; }
           <p class="p4-footnote">Accuracy scores are relative benchmark approximations (ImageNet Top-1 for CV; GLUE/MT-Bench for NLP; Kaggle leaderboard averages for Tabular). Speed scores reflect relative inference latency on standardised hardware. Sources: official model cards, Papers With Code, Hugging Face model hub.</p>
         </div>
       </div>
+
+      <!-- ══ PROJECT 05 ══ -->
+      <div class="project-entry">
+        <div class="project-entry-header">
+          <div class="project-entry-left">
+            <span class="project-num">05</span>
+            <h3 class="project-entry-title">Neural Network Components &amp; Playground Experiment</h3>
+            <span class="project-entry-badge">Completed</span>
+          </div>
+          <a href="https://github.com/yx-1/IWU-AIML" target="_blank" class="gh-link">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <p class="project-entry-desc">A visual guide to the core components of neural networks — layers, neurons, weights, activation functions, loss functions, and optimizers — paired with a hands-on TensorFlow Playground experiment classifying a circular dataset.</p>
+        <div class="project-entry-meta">
+          <span class="stack-item">Neural Networks</span>
+          <span class="stack-item">TensorFlow Playground</span>
+          <span class="stack-item">SVG Diagrams</span>
+          <span class="stack-item">Classification</span>
+        </div>
+
+        <div class="p5-wrap">
+          <div class="p5-eyebrow">Assignment 05 · Neural Networks</div>
+          <div class="p5-title">Neural Network <em>Structure &amp; Function</em></div>
+          <p class="p5-subtitle">How data flows from input to output, what each component does, and what happens when you actually train one.</p>
+
+          <!-- ── 1. ARCHITECTURE DIAGRAM ── -->
+          <p class="p5-section-lbl">Architecture — how data flows</p>
+          <div class="p5-arch">
+            <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans, sans-serif">
+              <defs>
+                <marker id="nn-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                  <path d="M1 1L7 4L1 7" fill="none" stroke="#c8c4be" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+
+              <!-- Layer background pills -->
+              <rect x="14" y="20" width="90" height="160" rx="12" fill="#dbeafe" opacity="0.5"/>
+              <rect x="176" y="20" width="90" height="160" rx="12" fill="#ede9fe" opacity="0.5"/>
+              <rect x="338" y="20" width="90" height="160" rx="12" fill="#ede9fe" opacity="0.5"/>
+              <rect x="500" y="20" width="90" height="160" rx="12" fill="#dcfce7" opacity="0.5"/>
+
+              <!-- Layer labels -->
+              <text x="59" y="13" text-anchor="middle" font-size="9" font-weight="600" fill="#1d4ed8" letter-spacing="0.08em" font-family="Plus Jakarta Sans,sans-serif">INPUT</text>
+              <text x="221" y="13" text-anchor="middle" font-size="9" font-weight="600" fill="#6d28d9" letter-spacing="0.08em" font-family="Plus Jakarta Sans,sans-serif">HIDDEN 1</text>
+              <text x="383" y="13" text-anchor="middle" font-size="9" font-weight="600" fill="#6d28d9" letter-spacing="0.08em" font-family="Plus Jakarta Sans,sans-serif">HIDDEN 2</text>
+              <text x="545" y="13" text-anchor="middle" font-size="9" font-weight="600" fill="#15803d" letter-spacing="0.08em" font-family="Plus Jakarta Sans,sans-serif">OUTPUT</text>
+
+              <!-- Input neurons (4) -->
+              <circle cx="59" cy="55"  r="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+              <circle cx="59" cy="95"  r="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+              <circle cx="59" cy="135" r="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+              <circle cx="59" cy="175" r="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+              <text x="59" y="59"  text-anchor="middle" font-size="9" fill="#1e40af" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">x₁</text>
+              <text x="59" y="99"  text-anchor="middle" font-size="9" fill="#1e40af" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">x₂</text>
+              <text x="59" y="139" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">x₃</text>
+              <text x="59" y="179" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">x₄</text>
+
+              <!-- Hidden layer 1 neurons (3) -->
+              <circle cx="221" cy="65"  r="16" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1.5"/>
+              <circle cx="221" cy="115" r="16" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1.5"/>
+              <circle cx="221" cy="165" r="16" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="221" y="69"  text-anchor="middle" font-size="8" fill="#5b21b6" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">ReLU</text>
+              <text x="221" y="119" text-anchor="middle" font-size="8" fill="#5b21b6" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">ReLU</text>
+              <text x="221" y="169" text-anchor="middle" font-size="8" fill="#5b21b6" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">ReLU</text>
+
+              <!-- Hidden layer 2 neurons (2) -->
+              <circle cx="383" cy="90"  r="16" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1.5"/>
+              <circle cx="383" cy="140" r="16" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="383" y="94"  text-anchor="middle" font-size="8" fill="#5b21b6" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">ReLU</text>
+              <text x="383" y="144" text-anchor="middle" font-size="8" fill="#5b21b6" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">ReLU</text>
+
+              <!-- Output neuron (1) -->
+              <circle cx="545" cy="115" r="18" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="545" y="112" text-anchor="middle" font-size="8" fill="#166534" font-weight="600" font-family="Plus Jakarta Sans,sans-serif">σ</text>
+              <text x="545" y="123" text-anchor="middle" font-size="7" fill="#166534" font-family="Plus Jakarta Sans,sans-serif">0/1</text>
+
+              <!-- Connections: input → h1 (sample, not all) -->
+              <g stroke="#c4b5fd" stroke-width="0.8" opacity="0.5" fill="none">
+                <line x1="75" y1="55"  x2="205" y2="65"/>
+                <line x1="75" y1="55"  x2="205" y2="115"/>
+                <line x1="75" y1="55"  x2="205" y2="165"/>
+                <line x1="75" y1="95"  x2="205" y2="65"/>
+                <line x1="75" y1="95"  x2="205" y2="115"/>
+                <line x1="75" y1="95"  x2="205" y2="165"/>
+                <line x1="75" y1="135" x2="205" y2="65"/>
+                <line x1="75" y1="135" x2="205" y2="115"/>
+                <line x1="75" y1="135" x2="205" y2="165"/>
+                <line x1="75" y1="175" x2="205" y2="65"/>
+                <line x1="75" y1="175" x2="205" y2="115"/>
+                <line x1="75" y1="175" x2="205" y2="165"/>
+              </g>
+              <!-- h1 → h2 -->
+              <g stroke="#c4b5fd" stroke-width="0.8" opacity="0.5" fill="none">
+                <line x1="237" y1="65"  x2="367" y2="90"/>
+                <line x1="237" y1="65"  x2="367" y2="140"/>
+                <line x1="237" y1="115" x2="367" y2="90"/>
+                <line x1="237" y1="115" x2="367" y2="140"/>
+                <line x1="237" y1="165" x2="367" y2="90"/>
+                <line x1="237" y1="165" x2="367" y2="140"/>
+              </g>
+              <!-- h2 → output -->
+              <g stroke="#86efac" stroke-width="1" opacity="0.6" fill="none">
+                <line x1="399" y1="90"  x2="527" y2="115"/>
+                <line x1="399" y1="140" x2="527" y2="115"/>
+              </g>
+
+              <!-- Weight label on one connection -->
+              <rect x="126" y="76" width="32" height="13" rx="4" fill="#fef9c3" stroke="#ca8a04" stroke-width="0.8"/>
+              <text x="142" y="85" text-anchor="middle" font-size="8" fill="#854d0e" font-family="Plus Jakarta Sans,sans-serif" font-weight="600">w₁₂</text>
+
+              <!-- Data flow arrow -->
+              <line x1="630" y1="115" x2="720" y2="115" stroke="#c8c4be" stroke-width="1.5" marker-end="url(#nn-arr)" fill="none"/>
+              <text x="675" y="109" text-anchor="middle" font-size="9" fill="#8a8680" font-family="Plus Jakarta Sans,sans-serif">ŷ</text>
+
+              <!-- Loss feedback arrow -->
+              <path d="M 720 128 Q 720 188 383 188 Q 200 188 59 188" fill="none" stroke="#fca5a5" stroke-width="1.2" stroke-dasharray="4,3"/>
+              <text x="400" y="198" text-anchor="middle" font-size="8" fill="#dc2626" font-family="Plus Jakarta Sans,sans-serif">backprop: update weights to reduce loss</text>
+              <text x="730" y="120" font-size="9" fill="#dc2626" font-family="Plus Jakarta Sans,sans-serif" font-weight="600">Loss</text>
+            </svg>
+          </div>
+
+          <!-- ── 2. COMPONENT CARDS ── -->
+          <p class="p5-section-lbl">Components explained</p>
+          <div class="p5-grid">
+
+            <div class="p5-card">
+              <div class="p5-card-ico" style="background:#dbeafe;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="2" stroke="#2563eb" stroke-width="1.4"/><line x1="4" y1="3" x2="4" y2="11" stroke="#2563eb" stroke-width="1" opacity="0.5"/><line x1="10" y1="3" x2="10" y2="11" stroke="#2563eb" stroke-width="1" opacity="0.5"/></svg>
+              </div>
+              <div class="p5-card-name">Layers</div>
+              <div class="p5-card-desc">Organised groups of neurons. The <strong>input layer</strong> receives raw data, <strong>hidden layers</strong> learn intermediate representations, and the <strong>output layer</strong> produces the final prediction.</div>
+            </div>
+
+            <div class="p5-card">
+              <div class="p5-card-ico" style="background:#ede9fe;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#7c3aed" stroke-width="1.4"/><circle cx="7" cy="7" r="2" fill="#7c3aed"/></svg>
+              </div>
+              <div class="p5-card-name">Neurons</div>
+              <div class="p5-card-desc">The basic unit. Each neuron receives inputs, multiplies them by weights, adds a bias, then passes the result through an activation function to produce its output.</div>
+              <div class="p5-card-formula">output = f(Σ wᵢxᵢ + b)</div>
+            </div>
+
+            <div class="p5-card">
+              <div class="p5-card-ico" style="background:#fef9c3;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="2" y1="7" x2="12" y2="7" stroke="#ca8a04" stroke-width="1.4"/><line x1="5" y1="4" x2="5" y2="10" stroke="#ca8a04" stroke-width="1" opacity="0.6"/><line x1="9" y1="4" x2="9" y2="10" stroke="#ca8a04" stroke-width="1" opacity="0.6"/></svg>
+              </div>
+              <div class="p5-card-name">Weights</div>
+              <div class="p5-card-desc">Numbers attached to each connection that control how strongly one neuron influences another. Training is the process of finding the right weights to minimise error.</div>
+            </div>
+
+            <div class="p5-card">
+              <div class="p5-card-ico" style="background:#dcfce7;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10 L5 10 L5 6 L8 6 L8 10 L12 10" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </div>
+              <div class="p5-card-name">Activation Functions</div>
+              <div class="p5-card-desc">Introduce non-linearity so the network can learn complex patterns. Common choices: <strong>ReLU</strong> (max(0,x)) for hidden layers, <strong>Sigmoid</strong> for binary output, <strong>Tanh</strong> for centred outputs.</div>
+              <div class="p5-card-formula">ReLU: max(0, x)</div>
+            </div>
+
+            <div class="p5-card">
+              <div class="p5-card-ico" style="background:#fee2e2;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9 Q5 3 7 7 Q9 11 12 5" stroke="#dc2626" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
+              </div>
+              <div class="p5-card-name">Loss Functions</div>
+              <div class="p5-card-desc">Measure how wrong the model's prediction is. The goal of training is to minimise this number. Binary cross-entropy is typical for classification; MSE for regression.</div>
+              <div class="p5-card-formula">BCE = -[y·log(ŷ) + (1-y)·log(1-ŷ)]</div>
+            </div>
+
+            <div class="p5-card">
+              <div class="p5-card-ico" style="background:#f0fdf4;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 11 Q4 4 7 7 Q10 10 12 3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" fill="none"/><circle cx="7" cy="7" r="2" fill="#16a34a"/></svg>
+              </div>
+              <div class="p5-card-name">Optimization Algorithms</div>
+              <div class="p5-card-desc">Update weights after each batch to reduce loss. <strong>Gradient Descent</strong> moves weights in the direction that reduces loss most. <strong>Adam</strong> adds adaptive learning rates for faster convergence.</div>
+              <div class="p5-card-formula">w ← w − η · ∂L/∂w</div>
+            </div>
+
+          </div>
+
+          <!-- ── 3. EXPERIMENT ── -->
+          <p class="p5-section-lbl">TensorFlow Playground experiment — circle dataset</p>
+          <div class="p5-exp">
+            <div class="p5-exp-head">
+              <span class="p5-exp-title">Classifying inner vs. outer ring (circle dataset)</span>
+              <span class="p5-exp-badge">Both losses → 0.000</span>
+            </div>
+            <div class="p5-exp-body">
+              <div class="p5-exp-col">
+                <div class="p5-exp-col-lbl">Baseline configuration</div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Activation</span><span class="p5-exp-val">Tanh</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Features</span><span class="p5-exp-val">x₁, x₂ only</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Architecture</span><span class="p5-exp-val">4 → 2 neurons</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Training loss</span><span class="p5-exp-val">~0.510</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Test loss</span><span class="p5-exp-val">~0.500</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Decision boundary</span><span class="p5-exp-val">Weak / inaccurate</span></div>
+              </div>
+              <div class="p5-exp-col">
+                <div class="p5-exp-col-lbl">Tuned configuration</div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Activation</span><span class="p5-exp-val good">ReLU</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Features</span><span class="p5-exp-val good">x₁, x₂, x₁², x₂²</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Architecture</span><span class="p5-exp-val good">3 → 2 neurons</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Training loss</span><span class="p5-exp-val good">0.000</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Test loss</span><span class="p5-exp-val good">0.000</span></div>
+                <div class="p5-exp-row"><span class="p5-exp-key">Decision boundary</span><span class="p5-exp-val good">Sharp circular ring</span></div>
+              </div>
+            </div>
+            <div class="p5-exp-finding">
+              <strong>Key findings:</strong> The three most impactful changes were (1) enabling <strong>x₁² and x₂²</strong> — squared features encode distance from centre, which directly matches the circular boundary; (2) switching to <strong>ReLU</strong> activation, which produced sharper nonlinear boundaries; and (3) the architecture did not need to grow — a <em>smaller</em> 3→2 network with better features outperformed the larger 4→2 baseline. This demonstrates that feature representation often matters more than network size.
+              <div class="p5-loss-compare">
+                <div class="p5-loss-box p5-loss-before">
+                  <div class="p5-loss-label">Before tuning</div>
+                  <div class="p5-loss-num">~0.505</div>
+                  <div class="p5-loss-sub">avg. train + test loss — near random guessing</div>
+                </div>
+                <div class="p5-loss-box p5-loss-after">
+                  <div class="p5-loss-label">After tuning</div>
+                  <div class="p5-loss-num">0.000</div>
+                  <div class="p5-loss-sub">both losses — perfect classification on this dataset</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── 4. SUMMARY ── -->
+          <p class="p5-section-lbl">Key insights</p>
+          <div class="p5-summary">
+            <div class="p5-sum-card">
+              <div class="p5-sum-head">Features &gt; Size</div>
+              <div class="p5-sum-text">Adding x₁² and x₂² let a smaller network solve the problem that a larger one couldn't. Better inputs can matter more than more neurons.</div>
+            </div>
+            <div class="p5-sum-card">
+              <div class="p5-sum-head">Loss is the compass</div>
+              <div class="p5-sum-text">Loss directly measures how wrong the model is. Watching both training and test loss together reveals whether the model is learning, underfitting, or overfitting.</div>
+            </div>
+            <div class="p5-sum-card">
+              <div class="p5-sum-head">Activation shapes learning</div>
+              <div class="p5-sum-text">Switching from Tanh to ReLU changed how nonlinearity was introduced and produced sharper, more accurate decision boundaries on this classification task.</div>
+            </div>
+          </div>
+
+        </div><!-- .p5-wrap -->
+      </div><!-- project-entry -->
 
       <!-- ══ PLACEHOLDER ══ -->
       <div class="placeholder">
